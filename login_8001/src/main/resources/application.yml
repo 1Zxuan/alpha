@@ -1,0 +1,22 @@
+mybatis:
+  type-aliases-package: com.bittereggs.login_8001.entity.User
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+spring:
+  application:
+    name: login_8001
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/apollo?userUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
