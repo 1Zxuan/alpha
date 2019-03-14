@@ -31,19 +31,19 @@ public class MailService {
         return randomcode;
     }
 
-    public void contextLoads(String s) {
+    public void contextLoads(String s,String sendmail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setSubject("bittereggs客服");//标题
         mailMessage.setText(s);//内容
-        mailMessage.setTo("1104935833@qq.com");//目标邮箱
+        mailMessage.setTo(sendmail);//目标邮箱
         mailMessage.setFrom("64390357@qq.com");//发件邮箱
         mailSender.send(mailMessage);
     }
 
-    public String test(){
+    public String sendmail(String sendmail){
         String s=random();
-        contextLoads(s);
+        contextLoads(s,sendmail);
         Map<String,Object> map = new HashMap<>();
         map.put("yzm",s);
         JSONArray jsonArray = JSONArray.fromObject(map);
