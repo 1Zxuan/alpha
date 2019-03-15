@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LoginMapper {
 
+    //注册
     void add(User user);
 
-    boolean login(User user);
+    User findById(Integer id);
 
-    boolean   adminlogin(User user);
+    User findByName(String name);
 }

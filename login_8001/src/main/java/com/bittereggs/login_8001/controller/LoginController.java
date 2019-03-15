@@ -5,10 +5,16 @@ import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,28 +35,36 @@ public class LoginController {
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
     public String register(@RequestBody User user){
-        redisHelper.hashPut("UserList",user.getUsername(),user.toString());
         Map<String,Object> map = new HashMap<>();
-        map.put("message",true);
-        JSONArray jsonArray = JSONArray.fromObject(map);
-        return jsonArray.toString();
+       if(this.loginService.add(user)){
+           map.put("msg","success");
+       }else {
+           map.put("msg","error");
+       }
+       JSONObject jsonObject = JSONObject.fromObject(map);
+        return jsonObject.toString();
     }
 
     //登录
     @RequestMapping(method = RequestMethod.POST,value = "/login",consumes = "application/json")
-    public String login(@RequestBody User user){
-       // System.out.println(redisHelper.hashFindAll("UserList").get(user.getUsername()));
-        JSONObject jsonObject = JSONObject.fromObject(redisHelper.hashFindAll("UserList").get(user.getUsername()));
-        System.out.println(jsonObject);
-        User user1 = (User) JSONObject.toBean(jsonObject,User.class);
-        if(user1 == null){
-            System.out.println("用户不存在");
-        }else if(user1 != null && !user.getPassword().equals(user1.getPassword())){
+    public String login(@RequestBody User user, Model model){
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
+        try{
+            subject.login(token);
+            System.out.println("登录成功");
+            return "redirect:/testThymeleaf";
+        }catch(UnknownAccountException e){
+            //用户名不存在
+            model.addAttribute("msg","用户名不存在");
+            System.out.println("用户名不存在");
+            return "login";
+        }catch(IncorrectCredentialsException e){
+            //用户名不存在
+            model.addAttribute("msg","密码错误");
             System.out.println("密码错误");
-        }else {
-            System.out.println("可以登录");
+            return "login";
         }
-        return null;
     }
 
     @ResponseBody

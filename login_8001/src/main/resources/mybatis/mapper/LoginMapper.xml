@@ -2,19 +2,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bittereggs.login_8001.mapper.LoginMapper">
+    <insert id="add"
+            parameterType="com.bittereggs.login_8001.entity.User">
 
-    <insert id="add" parameterType="com.bittereggs.login_8001.entity.User">
         insert into user
         (username,password,type)
         values
         (#{username},#{password},#{type})
+
     </insert>
 
-    <select id="login" parameterType="com.bittereggs.login_8001.entity.User" resultType="java.lang.Boolean">
-        <![CDATA[
-          select count(*) from user
-          where username = #{username} and password = #{password}
-        ]]>
+    <select id="findById"
+            parameterType="java.lang.Integer"
+            resultType="com.bittereggs.login_8001.entity.User">
+
+        select * from user where ID = #{id}
+
     </select>
 
+    <select id="findByName"
+            parameterType="java.lang.String"
+            resultType="com.bittereggs.login_8001.entity.User">
+
+        select * from user where username = #{name}
+
+    </select>
 </mapper>
