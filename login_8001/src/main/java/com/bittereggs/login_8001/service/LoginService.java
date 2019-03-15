@@ -6,7 +6,7 @@ public interface LoginService {
 
     void add(User user);
 
-    boolean login(User user);
+    Boolean login(User user);
 
-    boolean   adminlogin(User user);
+    Boolean   adminlogin(User user);
 }

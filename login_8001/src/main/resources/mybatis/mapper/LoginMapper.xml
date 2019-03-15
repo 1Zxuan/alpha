@@ -10,4 +10,11 @@
         (#{username},#{password},#{type})
     </insert>
 
+    <select id="login" parameterType="com.bittereggs.login_8001.entity.User" resultType="java.lang.Boolean">
+        <![CDATA[
+          select count(*) from user
+          where username = #{username} and password = #{password}
+        ]]>
+    </select>
+
 </mapper>
