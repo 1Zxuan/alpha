@@ -43,9 +43,9 @@ public class Realm extends AuthorizingRealm {
         System.out.print("执行认证逻辑");
         UsernamePasswordToken token = (UsernamePasswordToken) arg;
         User user = loginService.findByName(token.getUsername());
-        //System.out.println(user.toString());
-        if(user == null)
+        if (user == null) {
             return null;
+        }
         return new SimpleAuthenticationInfo(user,user.getPassword(),"");
     }
 }

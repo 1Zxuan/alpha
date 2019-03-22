@@ -1,7 +1,7 @@
 
 
 mybatis:
-  type-aliases-package: com.bittereggs.login_8001.entity.User
+  type-aliases-package: com.bittereggs.login_8001.entity
   mapper-locations: classpath:mybatis/mapper/*.xml
 
 eureka:
