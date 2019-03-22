@@ -30,7 +30,7 @@ public class FindInformationController {
         return biddingBook.toString();
     }
     //  获取全部招标书名字
-    @GetMapping("/getallbiddingbook")/////////////
+    @GetMapping("/getallbiddingbook")
     public String getAllBiddingBook(@RequestParam(name = "page")String page,@RequestParam(name = "order") String order ){
         List<BiddingBook> list=findInfomationService.getAllBiddingBook(page,order);
 
