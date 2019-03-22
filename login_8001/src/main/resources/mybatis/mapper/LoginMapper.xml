@@ -2,8 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bittereggs.login_8001.mapper.LoginMapper">
-    <insert id="add"
-            parameterType="com.bittereggs.login_8001.entity.User">
+    <insert id="add" parameterType="com.bittereggs.login_8001.entity.User">
 
         insert into user
         (username,password,type)
@@ -12,9 +11,7 @@
 
     </insert>
 
-    <select id="findById"
-            parameterType="java.lang.Integer"
-            resultType="com.bittereggs.login_8001.entity.User">
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.bittereggs.login_8001.entity.User">
 
         select * from user where ID = #{id}
 

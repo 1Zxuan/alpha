@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.findinfromatin_8003.mapper.FindInformationMapper">
+    <select id="getWorkRoom" parameterType="java.lang.String"  resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
+        select * from workroom_info where workroom_username = #{workroom_username}
+    </select>
+    <select id="getBiddingBook" parameterType="java.lang.String"  resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
+        select * from bidding_book where bidding_name = #{bidding_name}
+    </select>
+    <select id="getAllWorkRoom" parameterType="java.lang.Integer" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
+        select workroom_username,workroom_name,score,volume,registered_date,goodfield from workroom_info limit  #{p},10
+    </select>
+    <select id="searchWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
+        SELECT * FROM workroom_info WHERE LOCATE(#{key},workroom_username);
+    </select>
+
+    <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
+        select * from bidding_book order by ${order} asc limit #{p},10
+    </select>
+</mapper>
