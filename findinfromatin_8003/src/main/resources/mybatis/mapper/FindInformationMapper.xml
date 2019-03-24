@@ -18,4 +18,8 @@
     <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
         select * from bidding_book order by ${order} asc limit #{p},10
     </select>
+
+    <select id="getEnterprise" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.Enterprise">
+        select * from enterprise_info where company_username=#{company_username}
+    </select>
 </mapper>

@@ -20,5 +20,5 @@ eureka:
       defaultZone: http://localhost:8000/eureka/
 
 mybatis:
-  type-aliases-package: com.alpha.findinfromatin_8004.entity
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.alpha.fillinformation_8004.entity
+  mapper-locations: classpath:mybatis.mapper/*.xml
