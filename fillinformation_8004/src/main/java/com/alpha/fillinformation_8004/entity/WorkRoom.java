@@ -1,4 +1,5 @@
-package com.alpha.findinfromatin_8003.entity;
+package com.alpha.fillinformation_8004.entity;
+
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,12 +12,12 @@ public class WorkRoom implements Serializable {
     private String team_honors;
     private String goodfield;
     private Float score;
-    private Date registered_date;
+    private String registered_date;
     private Integer state;
     private String volume;
     private String telphone;
     private String name;
-    private String ID_card;
+    private String id_card;
     private String address;
     private String email;
     private String moblephone;
@@ -69,11 +70,11 @@ public class WorkRoom implements Serializable {
         this.score = score;
     }
 
-    public Date getRegistered_date() {
+    public String getRegistered_date() {
         return registered_date;
     }
 
-    public void setRegistered_date(Date registered_date) {
+    public void setRegistered_date(String registered_date) {
         this.registered_date = registered_date;
     }
 
@@ -109,12 +110,12 @@ public class WorkRoom implements Serializable {
         this.name = name;
     }
 
-    public String getID_card() {
-        return ID_card;
+    public String getId_card() {
+        return id_card;
     }
 
-    public void setID_card(String ID_card) {
-        this.ID_card = ID_card;
+    public void setId_card(String id_card) {
+        this.id_card = id_card;
     }
 
     public String getAddress() {
@@ -143,7 +144,7 @@ public class WorkRoom implements Serializable {
 
     @Override
     public String toString() {
-        return "WorkRoom{" +
+        return "{" +
                 "workroom_username='" + workroom_username + '\'' +
                 ", workroom_name='" + workroom_name + '\'' +
                 ", workroom_phone='" + workroom_phone + '\'' +
@@ -155,10 +156,11 @@ public class WorkRoom implements Serializable {
                 ", volume='" + volume + '\'' +
                 ", telphone='" + telphone + '\'' +
                 ", name='" + name + '\'' +
-                ", ID_card='" + ID_card + '\'' +
+                ", id_card='" + id_card + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", moblephone='" + moblephone + '\'' +
                 '}';
     }
 }
+

@@ -1,6 +1,7 @@
 package com.alpha.findinfromatin_8003.service.impl;
 
 import com.alpha.findinfromatin_8003.entity.BiddingBook;
+import com.alpha.findinfromatin_8003.entity.Enterprise;
 import com.alpha.findinfromatin_8003.entity.WorkRoom;
 import com.alpha.findinfromatin_8003.mapper.FindInformationMapper;
 import com.alpha.findinfromatin_8003.service.FindInfomationService;
@@ -54,5 +55,10 @@ public class FindInformationServiceImpl implements FindInfomationService {
             p=0;
         }
         return findInformationMapper.getAllBiddingBook(p,order);
+    }
+
+    @Override
+    public Enterprise getEnterprise(String company_username) {
+        return findInformationMapper.getEnterprise(company_username);
     }
 }

@@ -1,4 +1,4 @@
-package com.bittereggs.login_8001;
+package com.alpha.findinfromatin_8003;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Login8001ApplicationTests {
+public class Findinfromatin8003ApplicationTests {
 
     @Test
     public void contextLoads() {

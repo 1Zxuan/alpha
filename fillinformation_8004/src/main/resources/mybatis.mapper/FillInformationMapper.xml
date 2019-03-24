@@ -1,0 +1,75 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.fillinformation_8004.mapper.fillInformationMapper">
+    <update id="upfillenterprise" parameterType="com.alpha.fillinformation_8004.entity.Enterprise">
+        update enterprise_info_auditing
+            set
+                company_address = #{company_address},
+                company_name = #{company_name},
+                company_Mobile = #{company_Mobile},
+                company_info = #{company_info},
+                company_logo = #{company_logo},
+                company_address = #{company_address},
+                company_locale = #{company_locale},
+                service_industry = #{service_industry},
+                graded = #{graded},
+                registration_date = #{registration_date},
+                status = #{status},
+                volume = #{volume},
+                telphone = #{telphone},
+                `name`=#{name},
+                id_card=#{id_card},
+                address = #{address},
+                email = #{email},
+                mobilephone = #{mobilephone}
+        where company_username=#{company_username}
+    </update>
+
+    <insert id="fillenterprise" parameterType="com.alpha.fillinformation_8004.entity.Enterprise">
+        insert into enterprise_info_auditing
+        (company_username,company_name,company_Mobile,company_info,company_logo,company_address,company_locale,service_industry,graded,registration_date,status,volume,telphone,`name`,
+        id_card,address,email,mobilephone)
+        values(#{company_username},#{company_name},#{company_Mobile},#{company_info},#{company_logo},#{company_address},#{company_locale},#{service_industry},#{graded},#{registration_date},#{status},#{volume},#{telphone},
+        #{name},#{id_card},#{address},#{email},#{mobilephone})
+    </insert>
+
+    <select id="findenterpriseusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+      <![CDATA[
+        select count(*) from enterprise_info_auditing where company_username=#{company_username}
+      ]]>
+    </select>
+    <!---->
+    <update id="upfillworkroom" parameterType="com.alpha.fillinformation_8004.entity.WorkRoom">
+    update workroom_info_auditing
+      set
+          workroom_name=#{workroom_name},
+          workroom_phone=#{workroom_phone},
+          team_honors=#{team_honors},
+          goodfield=#{goodfield},
+          score=#{score},
+          registered_date=#{registered_date},
+          state=#{state},
+          volume=#{volume},
+          telphone=#{telphone},
+          `name`=#{name},
+          id_card=#{id_card},
+          address=#{address},
+          email=#{email},
+          moblephone=#{moblephone}
+      where
+          workroom_username =#{workroom_username}
+
+    </update>
+
+    <insert id="fillworkroom" parameterType="com.alpha.fillinformation_8004.entity.WorkRoom">
+    insert into workroom_info_auditing(workroom_username,workroom_name,workroom_phone,team_honors,goodfield,score,registered_date,state,volume,telphone,`name`,id_card,address,email,moblephone)
+    values (#{workroom_username},#{workroom_name},#{workroom_phone},#{team_honors},#{goodfield},#{score},#{registered_date},#{state},#{volume},#{telphone},#{name},#{id_card},#{address},#{email},#{moblephone})
+    </insert>
+
+    <select id="findworkroomusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+        select count(*) from workroom_info_auditing where workroom_username=#{workroom_username}
+      ]]>
+    </select>
+</mapper>
