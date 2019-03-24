@@ -13,6 +13,8 @@ public class User implements Serializable {
 
     private Integer type;
 
+    private String openid;
+
     public Integer getID() {
         return ID;
     }
@@ -45,6 +47,14 @@ public class User implements Serializable {
         this.type = type;
     }
 
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -52,6 +62,7 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", type=" + type +
+                ", openid='" + openid + '\'' +
                 '}';
     }
 }

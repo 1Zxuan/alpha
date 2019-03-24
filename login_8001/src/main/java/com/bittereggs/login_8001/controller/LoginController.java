@@ -1,6 +1,5 @@
 package com.bittereggs.login_8001.controller;
 
-import com.bittereggs.login_8001.config.RedisHelper;
 import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONArray;
@@ -13,7 +12,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +27,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private RedisHelper redisHelper;
 
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
@@ -48,13 +44,17 @@ public class LoginController {
     //登录
     @RequestMapping(method = RequestMethod.POST,value = "/login",consumes = "application/json")
     public String login(@RequestBody User user, Model model){
+
+        Map<String,Object> result = new HashMap<>();
+        JSONArray jsonObject;
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
-        try{
+        try {
             subject.login(token);
-            System.out.println("登录成功");
-            return "redirect:/testThymeleaf";
-        }catch(UnknownAccountException e){
+            result.put("msg",true);
+            jsonObject = JSONArray.fromObject(result);
+            return jsonObject.toString();
+        }catch(UnknownAccountException e) {
             //用户名不存在
             model.addAttribute("msg","用户名不存在");
             System.out.println("用户名不存在");
@@ -67,8 +67,9 @@ public class LoginController {
         }
     }
 
+
     @ResponseBody
-    @PostMapping("/test")
+    @GetMapping("/test")
     public String test(){
         return "test";
     }
