@@ -1,4 +1,4 @@
-package com.bittereggs.email_8002;
+package com.bittereggs.email_phone_8002;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

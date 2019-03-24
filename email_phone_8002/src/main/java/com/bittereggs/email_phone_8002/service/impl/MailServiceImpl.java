@@ -1,5 +1,7 @@
-package com.bittereggs.email_8002.service;
+package com.bittereggs.email_phone_8002.service.impl;
 
+import com.bittereggs.email_phone_8002.service.MailService;
+import com.bittereggs.email_phone_8002.util.SendSMS;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,7 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class MailService {
+public class MailServiceImpl implements MailService {
+
+
+
     @Autowired
     JavaMailSenderImpl mailSender;
     public String random() {
@@ -49,4 +54,12 @@ public class MailService {
         JSONArray jsonArray = JSONArray.fromObject(map);
         return jsonArray.toString();
     }
+
+    @Override
+    public String sendphone(String phone) {
+        SendSMS sendSMS = new SendSMS();
+        return sendSMS.send(phone);
+    }
+
+
 }
