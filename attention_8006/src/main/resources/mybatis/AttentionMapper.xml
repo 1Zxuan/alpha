@@ -1,0 +1,73 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.attention_8006.mapper.AttentionMapper">
+
+    <resultMap id="result" type="com.bittereggs.attention_8006.entity.Attention">
+        <id column="id" property="id" />
+        <result column="company" property="company" />
+        <result column="workroom" property="workroom" />
+        <result column="attention_date" property="attention_date" />
+    </resultMap>
+
+    <insert id="attentionworkroom" parameterType="java.lang.String">
+        insert into enterprise_attention
+          (company,workroom,attention_date)
+        values
+          (#{company},#{workroom},#{attention_date})
+    </insert>
+
+    <insert id="attentioncompany" parameterType="java.lang.String">
+        insert into workroom_attention
+          (company,workroom,attention_date)
+        values
+          (#{company},#{workroom},#{attention_date})
+    </insert>
+
+    <select id="companyattention" parameterType="java.lang.String" resultMap="result">
+        select * from enterprise_attention where company = #{company}
+    </select>
+
+    <select id="workroomattention" parameterType="java.lang.String" resultMap="result">
+        select * from workroom_attention where workroom = #{workroom}
+    </select>
+
+
+
+    <select id="work_attention_com" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          SELECT count(*) FROM `workroom_attention` where company =#{company} and workroom = #{workroom}
+        ]]>
+    </select>
+
+    <delete id="delworkroom" parameterType="java.lang.String">
+        DELETE FROM workroom_attention WHERE company = #{company} AND workroom =#{workroom}
+    </delete>
+
+    <delete id="delcompany" parameterType="java.lang.String">
+        DELETE FROM enterprise_attention WHERE company = #{company} AND workroom =#{workroom}
+    </delete>
+
+    <insert id="add_enterprise_attention_workroom" parameterType="java.lang.String" >
+        INSERT INTO enterprise_attention_workroom (company,workroom,attention_date) VALUES (#{company},#{workroom},#{date})
+        <selectKey resultType="java.lang.Boolean" keyProperty="count">
+            <![CDATA[
+				select count(*) from enterprise_attention_workroom where company =#{company} and workroom = #{workroom}
+			]]>
+        </selectKey>
+    </insert>
+
+    <select id="com_attention_work" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          SELECT count(*) FROM `enterprise_attention` where company =#{company} and workroom = #{workroom}
+        ]]>
+    </select>
+
+    <select id="Mutual_attention" parameterType="java.lang.String" resultMap="result">
+        select * from enterprise_attention_workroom where company = #{company}
+    </select>
+
+    <select id="Mutual_attention_workroom" parameterType="java.lang.String" resultMap="result">
+        select * from enterprise_attention_workroom where workroom = #{workroom}
+    </select>
+</mapper>

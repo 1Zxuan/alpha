@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.attention_8006.mapper.UnAttentionMapper">
+    <select id="enter_atten_work" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          select count(*) from enterprise_attention_workroom where company = #{company} and workroom = #{workroom}
+        ]]>
+    </select>
+
+    <delete id="delworkroom" parameterType="java.lang.String">
+        DELETE FROM workroom_attention WHERE company = #{company} AND workroom =#{workroom}
+    </delete>
+
+    <delete id="delcompany" parameterType="java.lang.String">
+        DELETE FROM enterprise_attention WHERE company = #{company} AND workroom =#{workroom}
+    </delete>
+
+    <delete id="delMutualattention" parameterType="java.lang.String">
+        DELETE FROM enterprise_attention_workroom WHERE company = #{company} AND workroom =#{workroom}
+    </delete>
+
+    <insert id="addworkroom" parameterType="java.lang.String">
+        insert into workroom_attention (company,workroom,attention_date) values (#{company},#{workroom},#{date})
+        <selectKey resultType="java.lang.Boolean">
+            <![CDATA[
+              select count(*) from workroom_attention where company = #{company} and workroom = #{workroom}
+            ]]>
+        </selectKey>
+    </insert>
+
+    <insert id="addcompany" parameterType="java.lang.String">
+        insert into enterprise_attention (company,workroom,attention_date) values (#{company},#{workroom},#{date})
+        <selectKey resultType="java.lang.Boolean">
+            <![CDATA[
+              select count(*) from enterprise_attention where company = #{company} and workroom = #{workroom}
+            ]]>
+        </selectKey>
+    </insert>
+</mapper>
