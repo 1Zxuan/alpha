@@ -67,10 +67,35 @@ public class LoginController {
         }
     }
 
+    //忘记密码发起邮箱验证
+    @RequestMapping(method = RequestMethod.GET,value = "/getyzm")
+    public String getyzm(@RequestParam("username")String username,@RequestParam("email")String email){
+        String yzm = loginService.getyzm(username,email);
+        return yzm;
+    }
 
-    @ResponseBody
-    @GetMapping("/test")
-    public String test(){
+    //验证验证码
+    @RequestMapping(method = RequestMethod.POST,value = "/checkyzm")
+    public String checkyzm(@RequestParam("username") String username, @RequestParam("yzm") String yzm){
+        JSONObject jsonObject = new JSONObject();
+       if (this.loginService.checkyzm(username,yzm)){
+           jsonObject.put("msg","success");
+       }else {
+           jsonObject.put("msg","error");
+       }
+       return jsonObject.toString();
+    }
+
+    //重置密码
+    @RequestMapping(method = RequestMethod.POST,value = "/resetpassword",consumes = "application/json")
+    public String resetpassword(@RequestBody User user){
+
+        return null;
+    }
+
+
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public String test(@RequestParam("name")String name){
         return "test";
     }
 }

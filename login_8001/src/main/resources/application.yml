@@ -9,6 +9,9 @@ eureka:
     service-url:
       defaultZone: http://localhost:8000/eureka/
 
+ribbon:
+  ReadTimeout: 120000
+  ConnectTimeout: 30000
 
 spring:
   application:

@@ -12,4 +12,6 @@ public interface LoginMapper {
     User findById(Integer id);
 
     User findByName(String name);
+
+
 }

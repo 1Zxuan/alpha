@@ -7,4 +7,13 @@ public interface LoginService {
     Boolean add(User user);
 
     User findByName(String name);
+
+    String getuserinfo(String username);
+
+    String getyzm(String username ,String email);
+
+    Boolean checkyzm(String username, String yzm);
+
+    void resetpassword(User user);
+
 }
