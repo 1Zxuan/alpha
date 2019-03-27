@@ -11,15 +11,34 @@ public class WorkRoom implements Serializable {
     private String team_honors;
     private String goodfield;
     private Float score;
-    private Date registered_date;
-    private Integer state;
     private String volume;
-    private String telphone;
-    private String name;
-    private String ID_card;
-    private String address;
+    private String bigfield;
+    private String cellphone;
     private String email;
-    private String moblephone;
+    private String name;
+    private String address;
+    private String headimage;
+    private Date registertime;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "workroom_username='" + workroom_username + '\'' +
+                ", workroom_name='" + workroom_name + '\'' +
+                ", workroom_phone='" + workroom_phone + '\'' +
+                ", team_honors='" + team_honors + '\'' +
+                ", goodfield='" + goodfield + '\'' +
+                ", score=" + score +
+                ", volume='" + volume + '\'' +
+                ", bigfield='" + bigfield + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", registertime=" + registertime +
+                '}';
+    }
 
     public String getWorkroom_username() {
         return workroom_username;
@@ -69,22 +88,6 @@ public class WorkRoom implements Serializable {
         this.score = score;
     }
 
-    public Date getRegistered_date() {
-        return registered_date;
-    }
-
-    public void setRegistered_date(Date registered_date) {
-        this.registered_date = registered_date;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     public String getVolume() {
         return volume;
     }
@@ -93,36 +96,20 @@ public class WorkRoom implements Serializable {
         this.volume = volume;
     }
 
-    public String getTelphone() {
-        return telphone;
+    public String getBigfield() {
+        return bigfield;
     }
 
-    public void setTelphone(String telphone) {
-        this.telphone = telphone;
+    public void setBigfield(String bigfield) {
+        this.bigfield = bigfield;
     }
 
-    public String getName() {
-        return name;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getID_card() {
-        return ID_card;
-    }
-
-    public void setID_card(String ID_card) {
-        this.ID_card = ID_card;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
     public String getEmail() {
@@ -133,32 +120,35 @@ public class WorkRoom implements Serializable {
         this.email = email;
     }
 
-    public String getMoblephone() {
-        return moblephone;
+    public String getName() {
+        return name;
     }
 
-    public void setMoblephone(String moblephone) {
-        this.moblephone = moblephone;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "WorkRoom{" +
-                "workroom_username='" + workroom_username + '\'' +
-                ", workroom_name='" + workroom_name + '\'' +
-                ", workroom_phone='" + workroom_phone + '\'' +
-                ", team_honors='" + team_honors + '\'' +
-                ", goodfield='" + goodfield + '\'' +
-                ", score=" + score +
-                ", registered_date=" + registered_date +
-                ", state=" + state +
-                ", volume='" + volume + '\'' +
-                ", telphone='" + telphone + '\'' +
-                ", name='" + name + '\'' +
-                ", ID_card='" + ID_card + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", moblephone='" + moblephone + '\'' +
-                '}';
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHeadimage() {
+        return headimage;
+    }
+
+    public void setHeadimage(String headimage) {
+        this.headimage = headimage;
+    }
+
+    public Date getRegistertime() {
+        return registertime;
+    }
+
+    public void setRegistertime(Date registertime) {
+        this.registertime = registertime;
     }
 }

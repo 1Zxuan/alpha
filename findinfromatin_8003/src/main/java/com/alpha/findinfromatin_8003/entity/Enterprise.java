@@ -1,26 +1,45 @@
 package com.alpha.findinfromatin_8003.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Enterprise implements Serializable {
     private String company_username;
     private String company_name;
     private String company_Mobile;
     private String company_info;
-    private String company_logo;
     private String company_address;
     private String company_locale;
     private String service_industry;
-    private Float graded;
-    private String registration_date;
-    private int status;
+    private double graded;
     private int volume;
-    private String telphone;
     private String name;
-    private String id_card;
     private String address;
     private String email;
-    private String mobilephone;
+    private String cellphone;
+    private String headimage;
+    private Date registertime;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "company_username='" + company_username + '\'' +
+                ", company_name='" + company_name + '\'' +
+                ", company_Mobile='" + company_Mobile + '\'' +
+                ", company_info='" + company_info + '\'' +
+                ", company_address='" + company_address + '\'' +
+                ", company_locale='" + company_locale + '\'' +
+                ", service_industry='" + service_industry + '\'' +
+                ", graded=" + graded +
+                ", volume=" + volume +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", registertime=" + registertime +
+                '}';
+    }
 
     public String getCompany_username() {
         return company_username;
@@ -54,14 +73,6 @@ public class Enterprise implements Serializable {
         this.company_info = company_info;
     }
 
-    public String getCompany_logo() {
-        return company_logo;
-    }
-
-    public void setCompany_logo(String company_logo) {
-        this.company_logo = company_logo;
-    }
-
     public String getCompany_address() {
         return company_address;
     }
@@ -86,28 +97,12 @@ public class Enterprise implements Serializable {
         this.service_industry = service_industry;
     }
 
-    public Float getGraded() {
+    public double getGraded() {
         return graded;
     }
 
-    public void setGraded(Float graded) {
+    public void setGraded(double graded) {
         this.graded = graded;
-    }
-
-    public String getRegistration_date() {
-        return registration_date;
-    }
-
-    public void setRegistration_date(String registration_date) {
-        this.registration_date = registration_date;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public int getVolume() {
@@ -118,28 +113,12 @@ public class Enterprise implements Serializable {
         this.volume = volume;
     }
 
-    public String getTelphone() {
-        return telphone;
-    }
-
-    public void setTelphone(String telphone) {
-        this.telphone = telphone;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getId_card() {
-        return id_card;
-    }
-
-    public void setId_card(String id_card) {
-        this.id_card = id_card;
     }
 
     public String getAddress() {
@@ -158,35 +137,27 @@ public class Enterprise implements Serializable {
         this.email = email;
     }
 
-    public String getMobilephone() {
-        return mobilephone;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setMobilephone(String mobilephone) {
-        this.mobilephone = mobilephone;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "company_username='" + company_username + '\'' +
-                ", company_name='" + company_name + '\'' +
-                ", company_Mobile='" + company_Mobile + '\'' +
-                ", company_info='" + company_info + '\'' +
-                ", company_logo='" + company_logo + '\'' +
-                ", company_address='" + company_address + '\'' +
-                ", company_locale='" + company_locale + '\'' +
-                ", service_industry='" + service_industry + '\'' +
-                ", graded=" + graded +
-                ", registration_date=" + registration_date +
-                ", status=" + status +
-                ", volume=" + volume +
-                ", telphone='" + telphone + '\'' +
-                ", name='" + name + '\'' +
-                ", id_card='" + id_card + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", mobilephone='" + mobilephone + '\'' +
-                '}';
+    public String getHeadimage() {
+        return headimage;
+    }
+
+    public void setHeadimage(String headimage) {
+        this.headimage = headimage;
+    }
+
+    public Date getRegistertime() {
+        return registertime;
+    }
+
+    public void setRegistertime(Date registertime) {
+        this.registertime = registertime;
     }
 }
