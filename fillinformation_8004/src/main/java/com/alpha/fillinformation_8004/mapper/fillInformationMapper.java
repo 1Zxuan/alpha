@@ -1,22 +1,22 @@
 package com.alpha.fillinformation_8004.mapper;
 
-import com.alpha.fillinformation_8004.entity.Enterprise;
-import com.alpha.fillinformation_8004.entity.WorkRoom;
+import com.alpha.fillinformation_8004.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface fillInformationMapper {
 
-    void fillenterprise(Enterprise enterprise);
-
-    void fillworkroom(WorkRoom workRoom);
-
     Boolean findenterpriseusername(String company_username);
-    
 
-    void upfillenterprise(Enterprise enterprise);
+    Boolean findworkroomusername(String workroom_username);
 
-    void upfillworkroom(WorkRoom workRoom);
+    void upUserInfo(User user);
 
-    boolean findworkroomusername(String workroom_username);
+    void fillEnterpriseAuditing(Enterprise_info_auditing enterpriseinfoauditing);
+
+    void upEnterpriseAuditing(Enterprise_info_auditing enterpriseinfoauditing);
+
+    void fillWorkroomAuditing(WorkRoom_info_auditing workRoomInfoauditing);
+
+    void upWorkroomAuditing(WorkRoom_info_auditing workRoomInfoauditing);
 }

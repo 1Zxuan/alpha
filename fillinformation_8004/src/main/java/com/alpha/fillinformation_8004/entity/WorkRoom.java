@@ -13,7 +13,7 @@ public class WorkRoom implements Serializable {
     private String goodfield;
     private Float score;
     private String registered_date;
-    private Integer state;
+    private Integer status;
     private String volume;
     private String telphone;
     private String name;
@@ -78,12 +78,12 @@ public class WorkRoom implements Serializable {
         this.registered_date = registered_date;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getVolume() {
@@ -151,8 +151,8 @@ public class WorkRoom implements Serializable {
                 ", team_honors='" + team_honors + '\'' +
                 ", goodfield='" + goodfield + '\'' +
                 ", score=" + score +
-                ", registered_date=" + registered_date +
-                ", state=" + state +
+                ", registered_date='" + registered_date + '\'' +
+                ", status=" + status +
                 ", volume='" + volume + '\'' +
                 ", telphone='" + telphone + '\'' +
                 ", name='" + name + '\'' +

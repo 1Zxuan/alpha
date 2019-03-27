@@ -1,11 +1,12 @@
 package com.alpha.fillinformation_8004.service;
 
-import com.alpha.fillinformation_8004.entity.Enterprise;
-import com.alpha.fillinformation_8004.entity.WorkRoom;
+import com.alpha.fillinformation_8004.entity.*;
 
 public interface fillInformationService {
 
-    String fillenterprise(Enterprise enterprise);
+    String upUserInfo(User user);
 
-    String fillworkroom(WorkRoom workRoom);
+    String fillEnterpriseAuditing(Enterprise_info_auditing enterpriseinfoauditing);
+
+    String fillWorkroomAuditing(WorkRoom_info_auditing workRoomInfoauditing);
 }
