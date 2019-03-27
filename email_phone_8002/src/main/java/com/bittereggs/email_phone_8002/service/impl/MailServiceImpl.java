@@ -3,6 +3,7 @@ package com.bittereggs.email_phone_8002.service.impl;
 import com.bittereggs.email_phone_8002.service.MailService;
 import com.bittereggs.email_phone_8002.util.SendSMS;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -51,8 +52,8 @@ public class MailServiceImpl implements MailService {
         contextLoads(s,sendmail);
         Map<String,Object> map = new HashMap<>();
         map.put("yzm",s);
-        JSONArray jsonArray = JSONArray.fromObject(map);
-        return jsonArray.toString();
+        JSONObject jsonObject = JSONObject.fromObject(map);
+        return jsonObject.toString();
     }
 
     @Override

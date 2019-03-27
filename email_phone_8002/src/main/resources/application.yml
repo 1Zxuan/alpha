@@ -9,4 +9,4 @@ eureka:
 
 spring:
   application:
-    name: email_phone_8002
+    name: email-phone-8002
