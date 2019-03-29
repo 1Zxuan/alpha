@@ -10,7 +10,11 @@ public interface LoginService {
 
     String getuserinfo(String username);
 
+    String phonelogin(String phone, String yzm);
+
     String getyzm(String username ,String email);
+
+    String getphoneloginyzm(String phone);
 
     Boolean checkyzm(String username, String yzm);
 
