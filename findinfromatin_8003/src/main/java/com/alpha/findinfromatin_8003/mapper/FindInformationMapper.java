@@ -23,7 +23,7 @@ public interface FindInformationMapper {
 
     Enterprise getEnterprise(String company_username);
 
-    List<Enterprise> getBeforBiddingbook(String company_username);
+    List<BiddingBook> getBeforBiddingbook(String company_username);
 
     User getUserInfo(String username);
 }

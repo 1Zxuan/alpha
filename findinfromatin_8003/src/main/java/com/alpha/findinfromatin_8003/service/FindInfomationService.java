@@ -11,7 +11,7 @@ public interface FindInfomationService {
 
     List<BiddingBook> getAllBiddingBook(String page, String order);
 
-    List<Enterprise> getBeforBiddingbook(String company_username);
+    List<BiddingBook> getBeforBiddingbook(String company_username);
 
 
 

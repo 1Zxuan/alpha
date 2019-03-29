@@ -19,7 +19,7 @@ public class FindInformationServiceImpl implements FindInfomationService {
     private FindInformationMapper findInformationMapper;
 
     @Override
-    public List<Enterprise> getBeforBiddingbook(String company_username) {
+    public List<BiddingBook> getBeforBiddingbook(String company_username) {
 
         return findInformationMapper.getBeforBiddingbook(company_username);
     }

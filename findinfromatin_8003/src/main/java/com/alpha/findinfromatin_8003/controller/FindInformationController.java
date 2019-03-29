@@ -35,7 +35,7 @@ public class FindInformationController {
     //获取全部当前用户过往招标书
     @GetMapping("/getbeforbiddingbook")
     public String getBeforBiddingbook(@RequestParam("company_username") String company_username){
-        List<Enterprise>  list = findInfomationService.getBeforBiddingbook(company_username);
+        List<BiddingBook>  list = findInfomationService.getBeforBiddingbook(company_username);
         JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
         JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig);
@@ -85,6 +85,7 @@ public class FindInformationController {
         JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig);
         return jsonArray.toString();
     }
+
     //查询工作室（模糊）
     @GetMapping("/searchworkroom")
     public String searchWorkRoom(@RequestParam(name = "key") String key){
