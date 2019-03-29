@@ -1,0 +1,56 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.biddingbook_8007.mapper.BiddingBookMapper">
+    <!--招标书详情查看(根据招标书id)-->
+    <select id="getBiddingBookInfo" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        select
+          biddingbookid,company_username,company_name,bidding_name,release_time,project_title,
+          project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
+          dev_language,`database`,demand,technology,feedbacktime,field,type
+      from bidding_book
+      where  biddingbookid = #{biddingbookid}
+    </select>
+    <!--获取未完成的招标书-->
+    <select id="getNoBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        select
+        biddingbookid,company_username,company_name,company_name,release_time,project_title,
+        project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
+        dev_language,`database`,demand,technology,feedbacktime,`type`,field
+        from bidding_book
+        <where>
+            type = 0
+            <if test="biddingbookid !=null">
+                and biddingbookid = #{biddingbookid}
+            </if>
+            <if test="company_username !=null">
+                and company_username = #{company_username}
+            </if>
+            <if test="domian !=null">
+                and domian = #{domian}
+            </if>
+            <if test="dev_platform  !=null">
+                and dev_platform  = #{dev_platform}
+            </if>
+            <if test="dev_language  !=null">
+                and dev_language  = #{dev_language}
+            </if>
+
+        </where>
+        order by release_time
+    </select>
+    <!--发布招标书-->
+    <insert id="releaseBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+      insert into bidding_book(biddingbookid,company_username,company_name,bidding_name,release_time,project_title,project_info,
+        project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,dev_language,`database`,demand,technology,
+        feedbacktime,type,field)
+      values
+          (#{biddingbookid},#{company_username},#{company_name},#{bidding_name},#{release_time},#{project_title},#{project_info},
+          #{project_amount},#{project_type},#{engineer_time},#{project_endtime},#{domian},#{dev_platform},#{dev_language},#{database},#{demand},
+          #{technology},#{feedbacktime},0,#{field})
+    </insert>
+    <!--邀请投标-->
+    <insert id="invatationWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
+      insert into invitation(biddingbookid,postscript,workroom_username,agree) values(#{biddingbookid},#{postscript},#{workroom_username},0)
+    </insert>
+</mapper>
