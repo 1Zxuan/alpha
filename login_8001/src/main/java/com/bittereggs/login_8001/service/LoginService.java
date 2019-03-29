@@ -14,6 +14,6 @@ public interface LoginService {
 
     Boolean checkyzm(String username, String yzm);
 
-    void resetpassword(User user);
+    Boolean resetpassword(User user);
 
 }

@@ -34,6 +34,10 @@ public class LoginServiceImpl implements LoginService {
             if(user1 == null){
                 this.loginMapper.add(user);
                 RedisHelper.hashPut("UserList",user.getUsername(),user.toString());
+                switch (user.getType()){
+                    case 1: loginMapper.addworkroominfo(user.getUsername());break;
+                    case 2: loginMapper.addenterpriseinfo(user.getUsername());break;
+                }
                 return true;
             }
             else {
@@ -45,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User findByName(String name) {
-        User user = new User();
+        User user;
         JSONObject redis_user = JSONObject.fromObject(RedisHelper.hashFindAll("UserList").get(name));
         if(redis_user.isEmpty()){
             user = this.loginMapper.findByName(name);
@@ -63,7 +67,6 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String getyzm(String username, String email) {
-        System.out.println(username);
         JSONObject jsonObject = JSONObject.fromObject(this.emailService.sendmail(email));
         RedisHelper.valuePut(username+"yzm",jsonObject.get("yzm"));
         RedisHelper.expirse(username+"yzm",5, TimeUnit.MINUTES);
@@ -86,8 +89,21 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void resetpassword(User user) {
-
+    public Boolean resetpassword(User user) {
+        try {
+            //清空缓存数据
+            RedisHelper.hashRemove("UserList",user.getUsername());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        //操作数据库
+        User user1 = this.loginMapper.findByName(user.getUsername());
+        if(user1 == null){
+            return false;
+        }else {
+            this.loginMapper.resetpassword(user);
+            return true;
+        }
     }
 
 //    public Boolean login(User user) {

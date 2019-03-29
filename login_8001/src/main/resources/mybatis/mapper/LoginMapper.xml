@@ -11,6 +11,18 @@
 
     </insert>
 
+    <insert id="addworkroominfo" parameterType="java.lang.String">
+
+        insert into workroom_info (workroom_username) values (#{username})
+
+    </insert>
+    
+    <insert id="addenterpriseinfo" parameterType="java.lang.String">
+
+        insert into enterprise_info (company_username) values (#{username})
+
+    </insert>
+
     <select id="findById" parameterType="java.lang.Integer" resultType="com.bittereggs.login_8001.entity.User">
 
         select * from user where ID = #{id}
@@ -24,4 +36,10 @@
         select * from user where username = #{name}
 
     </select>
+
+    <update id="resetpassword" parameterType="com.bittereggs.login_8001.entity.User">
+
+        UPDATE `user` SET `password` = #{password} WHERE username = #{username}
+
+    </update>
 </mapper>

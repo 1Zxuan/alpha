@@ -1,5 +1,6 @@
 package com.bittereggs.login_8001.controller;
 
+import com.bittereggs.login_8001.config.RedisHelper;
 import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONArray;
@@ -27,7 +28,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-
+    @Autowired
+    private RedisHelper redisHelper;
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
     public String register(@RequestBody User user){
@@ -43,27 +45,25 @@ public class LoginController {
 
     //登录
     @RequestMapping(method = RequestMethod.POST,value = "/login",consumes = "application/json")
-    public String login(@RequestBody User user, Model model){
-
-        Map<String,Object> result = new HashMap<>();
-        JSONArray jsonObject;
+    public String login(@RequestBody User user){
+        System.out.println(user.getUsername()+user.getPassword());
+        JSONObject jsonObject = new JSONObject();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
         try {
-            subject.login(token);
-            result.put("msg",true);
-            jsonObject = JSONArray.fromObject(result);
+           subject.login(token);
+           jsonObject = JSONObject.fromObject(redisHelper.hashFindAll("UserList").get(token.getUsername()));
+           jsonObject.remove("password");
+           jsonObject.put("msg","success");
             return jsonObject.toString();
         }catch(UnknownAccountException e) {
             //用户名不存在
-            model.addAttribute("msg","用户名不存在");
-            System.out.println("用户名不存在");
-            return "login";
+            jsonObject.put("msg","error");
+            return jsonObject.toString();
         }catch(IncorrectCredentialsException e){
             //用户名不存在
-            model.addAttribute("msg","密码错误");
-            System.out.println("密码错误");
-            return "login";
+            jsonObject.put("msg","wrongpwd");
+            return jsonObject.toString();
         }
     }
 
@@ -89,8 +89,13 @@ public class LoginController {
     //重置密码
     @RequestMapping(method = RequestMethod.POST,value = "/resetpassword",consumes = "application/json")
     public String resetpassword(@RequestBody User user){
-
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        if (loginService.resetpassword(user)){
+            jsonObject.put("msg","success");
+        }else {
+            jsonObject.put("msg","error");
+        }
+        return jsonObject.toString();
     }
 
 
