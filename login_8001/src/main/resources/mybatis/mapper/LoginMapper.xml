@@ -23,9 +23,9 @@
 
     </insert>
 
-    <select id="findById" parameterType="java.lang.Integer" resultType="com.bittereggs.login_8001.entity.User">
+    <select id="findByphone" parameterType="java.lang.String" resultType="com.bittereggs.login_8001.entity.User">
 
-        select * from user where ID = #{id}
+        select * from user where cellphone = #{phone}
 
     </select>
 

@@ -1,16 +1,17 @@
 package com.bittereggs.login_8001.service.impl;
 
+import com.bittereggs.login_8001.config.JsonDateValueProcessor;
 import com.bittereggs.login_8001.config.RedisHelper;
 import com.bittereggs.login_8001.entity.User;
-import com.bittereggs.login_8001.mapper.EmailService;
+import com.bittereggs.login_8001.mapper.EmailPhoneService;
 import com.bittereggs.login_8001.mapper.LoginMapper;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -23,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
     private RedisHelper RedisHelper;
 
     @Autowired
-    private EmailService emailService;
+    private EmailPhoneService emailPhoneService;
 
     @Override
     public Boolean add(User user) {
@@ -66,10 +67,60 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public String phonelogin(String phone, String yzm) {
+        //验证
+        Object redisphoenyzm = RedisHelper.getValue(phone+"yzm");
+        JSONObject json = new JSONObject();
+        if (redisphoenyzm ==null){
+            json.put("msg","error");
+        } else {
+            if (yzm.equals(redisphoenyzm.toString())){
+                Object redisphoenuser = RedisHelper.hashGet("PhoneUserList",phone);
+                if ( redisphoenuser == null){
+                    JsonConfig jsonConfig = new JsonConfig();
+                    jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+                    json = JSONObject.fromObject(this.loginMapper.findByphone(phone),jsonConfig);
+                    RedisHelper.hashPut("PhoneUserList",phone,json.toString());
+                }else {
+                    json = JSONObject.fromObject(redisphoenuser);
+                }
+                json.put("msg","success");
+            }else {
+                json.put("msg","error");
+            }
+        }
+        return json.toString();
+    }
+
+    @Override
     public String getyzm(String username, String email) {
-        JSONObject jsonObject = JSONObject.fromObject(this.emailService.sendmail(email));
-        RedisHelper.valuePut(username+"yzm",jsonObject.get("yzm"));
-        RedisHelper.expirse(username+"yzm",5, TimeUnit.MINUTES);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = JSONObject.fromObject(this.emailPhoneService.sendmail(email));
+            RedisHelper.valuePut(username+"yzm",jsonObject.get("yzm"));
+            RedisHelper.expirse(username+"yzm",5, TimeUnit.MINUTES);
+            jsonObject.remove("yzm");
+            jsonObject.put("msg","success");
+        }catch (Exception e){
+            jsonObject.put("msg","error");
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
+    public String getphoneloginyzm(String phone) {
+
+        //调用手机验证码服务发送验证码，并存入缓存
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
+            RedisHelper.valuePut(phone+"yzm",jsonObject.get("yzm"));
+            RedisHelper.expirse(phone+"yzm",5,TimeUnit.MINUTES);
+            jsonObject.remove("yzm");
+            jsonObject.put("msg","success");
+        } catch (Exception e){
+            jsonObject.put("msg","error");
+        }
         return jsonObject.toString();
     }
 

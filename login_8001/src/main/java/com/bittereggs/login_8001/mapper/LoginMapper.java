@@ -15,7 +15,7 @@ public interface LoginMapper {
 
     void resetpassword(User user);
 
-    User findById(Integer id);
+    User findByphone(String phone);
 
     User findByName(String name);
 

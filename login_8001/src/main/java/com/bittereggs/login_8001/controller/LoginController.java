@@ -70,11 +70,25 @@ public class LoginController {
     //忘记密码发起邮箱验证
     @RequestMapping(method = RequestMethod.GET,value = "/getyzm")
     public String getyzm(@RequestParam("username")String username,@RequestParam("email")String email){
-        String yzm = loginService.getyzm(username,email);
-        return yzm;
+        String result = loginService.getyzm(username,email);
+        return result;
     }
 
-    //验证验证码
+    //发起手机验证码登录
+    @RequestMapping(method = RequestMethod.GET,value = "/getphoneloginyzm")
+    public String getphoneloginyzm(@RequestParam("phone") String phone){
+        String result = this.loginService.getphoneloginyzm(phone);
+        return result;
+    }
+
+    //手机号验证登录
+    @RequestMapping(method = RequestMethod.POST,value = "/checkphonelogin")
+    public String checkphonelogin(@RequestParam("phone") String phone,@RequestParam("yzm") String yzm){
+        String result = this.loginService.phonelogin(phone,yzm);
+        return result;
+    }
+
+    //验证邮箱验证码
     @RequestMapping(method = RequestMethod.POST,value = "/checkyzm")
     public String checkyzm(@RequestParam("username") String username, @RequestParam("yzm") String yzm){
         JSONObject jsonObject = new JSONObject();

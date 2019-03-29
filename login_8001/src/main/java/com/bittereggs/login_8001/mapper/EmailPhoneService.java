@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 
 @FeignClient(name = "EMAIL-PHONE-8002")
-public interface EmailService {
+public interface EmailPhoneService {
 
     @GetMapping("/sendmail")
     String sendmail(@RequestParam("sendmail") String sendmail);
 
+    @GetMapping("/sendphone")
+    String sendphone(@RequestParam("sendphone") String sendphone);
 }
