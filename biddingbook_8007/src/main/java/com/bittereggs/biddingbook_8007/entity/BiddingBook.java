@@ -52,33 +52,9 @@ public class BiddingBook implements Serializable {
 
     private String field;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "ID=" + ID +
-                ", biddingbookid='" + biddingbookid + '\'' +
-                ", company_username='" + company_username + '\'' +
-                ", company_name='" + company_name + '\'' +
-                ", biddingbook='" + biddingbook + '\'' +
-                ", bidding_name='" + bidding_name + '\'' +
-                ", release_time=" + release_time +
-                ", project_title='" + project_title + '\'' +
-                ", project_info='" + project_info + '\'' +
-                ", project_amount=" + project_amount +
-                ", project_type='" + project_type + '\'' +
-                ", engineer_time=" + engineer_time +
-                ", project_endtime=" + project_endtime +
-                ", domian='" + domian + '\'' +
-                ", dev_platform='" + dev_platform + '\'' +
-                ", dev_language='" + dev_language + '\'' +
-                ", database='" + database + '\'' +
-                ", demand='" + demand + '\'' +
-                ", technology='" + technology + '\'' +
-                ", feedbacktime='" + feedbacktime + '\'' +
-                ", type=" + type +
-                ", field='" + field + '\'' +
-                '}';
-    }
+    private String order;
+
+    private Integer page;
 
     public Integer getID() {
         return ID;
@@ -212,7 +188,7 @@ public class BiddingBook implements Serializable {
         return database;
     }
 
-    public void setDatabase(String datebase) {
+    public void setDatabase(String database) {
         this.database = database;
     }
 
@@ -254,5 +230,51 @@ public class BiddingBook implements Serializable {
 
     public void setField(String field) {
         this.field = field;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "ID=" + ID +
+                ", biddingbookid='" + biddingbookid + '\'' +
+                ", company_username='" + company_username + '\'' +
+                ", company_name='" + company_name + '\'' +
+                ", biddingbook='" + biddingbook + '\'' +
+                ", bidding_name='" + bidding_name + '\'' +
+                ", release_time=" + release_time +
+                ", project_title='" + project_title + '\'' +
+                ", project_info='" + project_info + '\'' +
+                ", project_amount=" + project_amount +
+                ", project_type='" + project_type + '\'' +
+                ", engineer_time=" + engineer_time +
+                ", project_endtime=" + project_endtime +
+                ", domian='" + domian + '\'' +
+                ", dev_platform='" + dev_platform + '\'' +
+                ", dev_language='" + dev_language + '\'' +
+                ", database='" + database + '\'' +
+                ", demand='" + demand + '\'' +
+                ", technology='" + technology + '\'' +
+                ", feedbacktime='" + feedbacktime + '\'' +
+                ", type=" + type +
+                ", field='" + field + '\'' +
+                ", order='" + order + '\'' +
+                ", page=" + page +
+                '}';
     }
 }

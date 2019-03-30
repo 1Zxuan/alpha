@@ -29,7 +29,7 @@ public class BiddingBookController {
         return res;
     }
 
-    //查找所有未完成招标书
+    //查找所有未完成招标书(筛选排序)
     @PostMapping("/getnobiddingbook")
     public String getNoBiddingBook(@RequestBody BiddingBook biddingBook){
         System.out.println(biddingBook);

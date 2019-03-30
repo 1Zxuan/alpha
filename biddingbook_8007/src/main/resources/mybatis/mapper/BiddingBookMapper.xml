@@ -19,7 +19,7 @@
         dev_language,`database`,demand,technology,feedbacktime,`type`,field
         from bidding_book
         <where>
-            type = 0
+            type = #{type}
             <if test="biddingbookid !=null">
                 and biddingbookid = #{biddingbookid}
             </if>
@@ -35,9 +35,11 @@
             <if test="dev_language  !=null">
                 and dev_language  = #{dev_language}
             </if>
-
+            <if test="order != null">
+                order by ${order}
+            </if>
         </where>
-        order by release_time
+            limit #{page},10
     </select>
     <!--发布招标书-->
     <insert id="releaseBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">

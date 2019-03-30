@@ -15,20 +15,21 @@ public class fillInformationController {
     //填写企业信息(审核)
     @PostMapping("/fillenterpriseauditing")
     public String fillEnterpriseAuditing(@RequestBody Enterprise_info_auditing enterpriseInfoAuditing){
-        return fillInformationService.fillEnterpriseAuditing(enterpriseInfoAuditing);
+        String res = fillInformationService.fillEnterpriseAuditing(enterpriseInfoAuditing);
+        return res;
     }
 
     //填写工作室信息(审核)
     @PostMapping("/fillworkroomauditing")
     public String fillWorkroomAuditing(@RequestBody WorkRoom_info_auditing workRoomInfoauditing){
-        System.out.println(workRoomInfoauditing);
-        return fillInformationService.fillWorkroomAuditing(workRoomInfoauditing);
+        String res = fillInformationService.fillWorkroomAuditing(workRoomInfoauditing);
+        return res;
     }
 
     //修改用户基本信息
     @PostMapping("/upuserinfo")
     public String upUserInfo(@RequestBody User user){
-        System.out.println(user.toString());
-        return fillInformationService.upUserInfo(user);
+        String res = fillInformationService.upUserInfo(user);
+        return res;
     }
 }

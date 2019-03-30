@@ -9,19 +9,19 @@ import java.util.List;
 
 public interface FindInfomationService {
 
-    List<BiddingBook> getAllBiddingBook(String page, String order);
+    /*List<BiddingBook> getAllBiddingBook(String page, String order);*/
 
-    List<BiddingBook> getBeforBiddingbook(String company_username);
+   /* List<BiddingBook> getBeforBiddingbook(String company_username);*/
 
 
 
-    List<WorkRoom> getAllWorkRoom(String page);
+    String getAllWorkRoom(String page);
 
-    List<WorkRoom> searchWorkRoom(String key);
+    String searchWorkRoom(String key);
 
-    WorkRoom getWorkRoom(String workroom_username);
+    String getWorkRoom(String workroom_username);
 
-    Enterprise getEnterprise(String company_username);
+    String getEnterprise(String company_username);
 
-    User getUserInfo(String username);
+    String getUserInfo(String username);
 }

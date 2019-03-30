@@ -7,10 +7,10 @@
     <select id="getBeforBiddingbook" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
         select * from bidding_book where company_username=#{company_username} and type = 1
     </select>
-    <!--分页显示所有招标书-->
-    <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
+
+   <!-- <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
         select * from bidding_book order by ${order} asc limit #{p},10
-    </select>
+    </select>-->
 
 
     <!--分页显示所有工作室-->

@@ -2,8 +2,10 @@ package com.bittereggs.login_8001.mapper;
 
 import com.bittereggs.login_8001.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component(value = "LoginMappper")
 public interface LoginMapper {
 
     //注册

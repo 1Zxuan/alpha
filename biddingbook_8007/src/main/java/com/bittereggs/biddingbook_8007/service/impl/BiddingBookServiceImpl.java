@@ -53,37 +53,58 @@ public class BiddingBookServiceImpl implements BiddingBookService {
         biddingBook.setEngineer_time((int)day);
         JSONObject jsonObject = new JSONObject();
         if(biddingBookMapper.releaseBiddingBook(biddingBook)>0)
-            jsonObject.put("msg","true");
+            jsonObject.put("msg","success");
         else
-            jsonObject.put("msg","false");
+            jsonObject.put("msg","error");
         return jsonObject.toString();
     }
 
     @Override
     public String getBiddingBookInfo(String biddingbookid) {
         BiddingBook biddingBook = biddingBookMapper.getBiddingBookInfo(biddingbookid);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-        JSONObject jsonArray = JSONObject.fromObject(biddingBook,jsonConfig);
-        return jsonArray.toString();
+        if (biddingBook!=null){
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+            JSONObject jsonArray = JSONObject.fromObject(biddingBook,jsonConfig);
+            return jsonArray.toString();
+        }
+        else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("msg","error");
+            return jsonObject.toString();
+        }
     }
 
     @Override
     public String getNoBiddingBook(BiddingBook biddingBook) {
+        int page=biddingBook.getPage();
+        int p =0;
+        if( page>=1 ){
+            p = page*10+1;
+        }else{
+            p=0;
+        }
+        biddingBook.setPage(p);
         List<BiddingBook> list = biddingBookMapper.getNoBiddingBook(biddingBook);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-        JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig);
-        return jsonArray.toString();
+        if(list.size()>0) {
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+            JSONArray jsonArray = JSONArray.fromObject(list, jsonConfig);
+            return jsonArray.toString();
+        }else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("msg","error");
+            return jsonObject.toString();
+        }
     }
 
     @Override
     public String invatationWorkroom(Invatation invatation) {
         JSONObject jsonObject = new JSONObject();
         if(biddingBookMapper.invatationWorkroom(invatation)>0)
-            jsonObject.put("msg","true");
+            jsonObject.put("msg","success");
         else
-            jsonObject.put("msg","false");
+            jsonObject.put("msg","error");
         return jsonObject.toString();
     }
 }

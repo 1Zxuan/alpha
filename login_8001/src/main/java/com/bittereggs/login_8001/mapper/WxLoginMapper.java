@@ -2,6 +2,7 @@ package com.bittereggs.login_8001.mapper;
 
 import com.bittereggs.login_8001.entity.WxUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  * @author 楼中煊
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 
 @Mapper
+@Component(value = "WxLoginMapper")
 public interface WxLoginMapper {
 
     WxUser findbyopenid(String openid);
