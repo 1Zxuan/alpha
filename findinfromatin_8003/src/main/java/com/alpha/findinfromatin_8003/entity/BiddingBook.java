@@ -11,6 +11,24 @@ public class BiddingBook implements Serializable {
     private Date engineer_time;
     private Double project_amount;
     private String project_info;
+    private String order;
+    private Integer page;
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public Integer getId() {
         return id;
@@ -69,6 +87,8 @@ public class BiddingBook implements Serializable {
                 ", engineer_time=" + engineer_time +
                 ", project_amount=" + project_amount +
                 ", project_info='" + project_info + '\'' +
+                ", order='" + order + '\'' +
+                ", page=" + page +
                 '}';
     }
 }

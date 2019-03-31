@@ -5,18 +5,18 @@
 
     <!--已完成的招标书-->
     <select id="getBeforBiddingbook" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
-        select * from enterprise_info where company_username=#{company_username} where
+        select * from bidding_book where company_username=#{company_username} and type = 1
     </select>
-    <!--分页显示所有招标书-->
-    <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
+
+   <!-- <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
         select * from bidding_book order by ${order} asc limit #{p},10
-    </select>
+    </select>-->
 
 
     <!--分页显示所有工作室-->
     <select id="getAllWorkRoom" parameterType="java.lang.Integer" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select
-          workroom_username,workroom_name,score,volume,goodfield,bigfield,`user`.registertime
+          workroom_username,workroom_name,score,volume,goodfield,areas_expertise,`user`.registertime
         from
           workroom_info,`user`
         where
@@ -29,7 +29,7 @@
     <select id="searchWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select
             workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-            score,volume,bigfield,cellphone,email,name,address,headimage,registertime
+            score,volume,areas_expertise,cellphone,email,name,address,headimage,registertime
         FROM
           workroom_info,user
         WHERE
@@ -55,7 +55,7 @@
     <!--通过工作室名称获取所有信息-->
     <select id="getWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-          score,volume,bigfield,cellphone,email,name,address,headimage,registertime
+          score,volume,areas_expertise,cellphone,email,name,address,headimage,registertime
         from
           workroom_info,`user`
         where
