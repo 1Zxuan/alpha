@@ -7,22 +7,18 @@
         <groupId>com.bittereggs</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.alpha</groupId>
-    <artifactId>findinfromatin_8003</artifactId>
+    <groupId>com.bittereggs</groupId>
+    <artifactId>money_8008</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>findinfromatin_8003</name>
-    <description>findinfromatin_8003 project for Spring Boot</description>
+    <name>money_8008</name>
+    <description>money project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
+
     <dependencies>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.10</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -44,6 +40,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -4,6 +4,4 @@ public interface MailService{
     String sendmail(String mail);
 
     String sendphone(String phone);
-
-
 }

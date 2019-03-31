@@ -11,7 +11,7 @@
     <groupId>com.bittereggs</groupId>
     <artifactId>upload_download_8005</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>upload_8005</name>
+    <name>upload_download_8005</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

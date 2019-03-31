@@ -1,5 +1,6 @@
 package com.alpha.fillinformation_8004.service.impl;
 
+import com.alpha.fillinformation_8004.config.RedisHelper;
 import com.alpha.fillinformation_8004.entity.*;
 import com.alpha.fillinformation_8004.mapper.fillInformationMapper;
 import com.alpha.fillinformation_8004.service.fillInformationService;
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FillInformationServiceImpl implements fillInformationService {
+
+    @Autowired
+    private RedisHelper redisHelper;
+
     @Autowired
     private fillInformationMapper fillInformationMapper;
     //    是否存在企业
@@ -24,6 +29,7 @@ public class FillInformationServiceImpl implements fillInformationService {
     public String fillEnterpriseAuditing(Enterprise_info_auditing enterpriseinfoauditing) {
         JSONObject jsonObject = new JSONObject();
         try{
+
             //判断是否存在
             if(!isfindenterpriseusername(enterpriseinfoauditing.getCompany_username())){
                 fillInformationMapper.fillEnterpriseAuditing(enterpriseinfoauditing);
@@ -31,11 +37,11 @@ public class FillInformationServiceImpl implements fillInformationService {
             else{
                 fillInformationMapper.upEnterpriseAuditing(enterpriseinfoauditing);
             }
-            jsonObject.put("msg","success");
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            jsonObject.put("msg","error");
+            jsonObject.put("msg","false");
+            return jsonObject.toString();
         }
+        jsonObject.put("msg","true");
         return jsonObject.toString();
     }
     //    往工作室审核表插入工作室审核
@@ -50,11 +56,11 @@ public class FillInformationServiceImpl implements fillInformationService {
             else{
                 fillInformationMapper.upWorkroomAuditing(workRoomInfoauditing);
             }
-            jsonObject.put("msg","success");
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            jsonObject.put("msg","error");
+            jsonObject.put("msg","false");
+            return jsonObject.toString();
         }
+        jsonObject.put("msg","true");
         return jsonObject.toString();
     }
     //更新基本信息
@@ -62,15 +68,14 @@ public class FillInformationServiceImpl implements fillInformationService {
     public String upUserInfo(User user) {
         JSONObject jsonObject = new JSONObject();
         try {
-            if(fillInformationMapper.upUserInfo(user)>0){
-                jsonObject.put("msg","success");
-            }else{
-                jsonObject.put("msg","error");
-            }
+            //删除缓存中的信息
+           redisHelper.hashRemove("UserList",user.getUsername());
+           fillInformationMapper.upUserInfo(user);
         }catch(Exception e){
-            System.out.println(e);
-            jsonObject.put("msg","error");
+            jsonObject.put("msg","false");
+            return jsonObject.toString();
         }
+        jsonObject.put("msg","true");
         return jsonObject.toString();
     }
 }

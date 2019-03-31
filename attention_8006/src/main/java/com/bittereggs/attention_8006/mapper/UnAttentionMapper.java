@@ -2,7 +2,6 @@ package com.bittereggs.attention_8006.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 /**
  * @author 楼中煊
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Mapper
-@Component(value = "UnAttentionMapper")
 public interface UnAttentionMapper {
 
     Boolean enter_atten_work (@Param("company") String company, @Param("workroom") String workroom);

@@ -3,15 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.findinfromatin_8003.mapper.FindInformationMapper">
 
-    <!--已完成的招标书-->
-    <select id="getBeforBiddingbook" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
-        select * from bidding_book where company_username=#{company_username} and type = 1
-    </select>
-
-   <!-- <select id="getAllBiddingBook" resultType="com.alpha.findinfromatin_8003.entity.BiddingBook">
-        select * from bidding_book order by ${order} asc limit #{p},10
-    </select>-->
-
 
     <!--分页显示所有工作室-->
     <select id="getAllWorkRoom" parameterType="java.lang.Integer" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
@@ -29,13 +20,11 @@
     <select id="searchWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select
             workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-            score,volume,areas_expertise,cellphone,email,name,address,headimage,registertime
+            score,volume,areas_expertise,cellphone,email,`name`,address,headimage,registertime
         FROM
           workroom_info,user
         WHERE
-          workroom_username
-        like
-          "%"#{key}"%"
+          workroom_username like "%"#{key}"%"
         and
           workroom_info.workroom_username=`user`.username
     </select>
@@ -43,30 +32,22 @@
     <!--通过企业名称获取所有信息-->
     <select id="getEnterprise" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.Enterprise">
         select
-          username,company_name,company_Mobile,company_info,company_address,company_locale,
-          service_industry,graded,volume,name,address,email,cellphone,headimage,registertime
+          company_username,company_name,company_Mobile,company_info,company_address,company_locale,
+          service_industry,graded,volume
         from
-          enterprise_info,`user`
+          enterprise_info
         where
           company_username=#{company_username}
-        and
-          enterprise_info.company_username=`user`.username
     </select>
+
     <!--通过工作室名称获取所有信息-->
     <select id="getWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-          score,volume,areas_expertise,cellphone,email,name,address,headimage,registertime
+          score,volume,areas_expertise
         from
-          workroom_info,`user`
+          workroom_info
         where
           workroom_username=#{workroom_username}
-        and
-          workroom_info.workroom_username=`user`.username
-
     </select>
 
-    <!--获取用户的所有基本信息-->
-    <select id="getUserInfo" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.User">
-        select * from `user` where username= #{username}
-    </select>
 </mapper>

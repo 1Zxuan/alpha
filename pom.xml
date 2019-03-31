@@ -28,6 +28,7 @@
         <module>upload_download_8005</module>
         <module>attention_8006</module>
         <module>biddingbook_8007</module>
+        <module>money_8008</module>
     </modules>
 
     <dependencies>
@@ -70,7 +71,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

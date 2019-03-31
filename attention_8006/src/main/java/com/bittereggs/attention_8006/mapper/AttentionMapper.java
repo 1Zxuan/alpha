@@ -3,7 +3,6 @@ package com.bittereggs.attention_8006.mapper;
 import com.bittereggs.attention_8006.entity.Attention;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import java.util.List;
  */
 
 @Mapper
-@Component(value = "AttentionMapper")
 public interface AttentionMapper {
 
     void attentionworkroom (@Param("company") String company, @Param("workroom")  String workroom, @Param("attention_date")  String attention_date);

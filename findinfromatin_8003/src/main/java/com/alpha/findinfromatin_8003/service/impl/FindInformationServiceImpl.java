@@ -1,8 +1,7 @@
 package com.alpha.findinfromatin_8003.service.impl;
 
-import com.alpha.findinfromatin_8003.entity.BiddingBook;
+import com.alpha.findinfromatin_8003.config.RedisHelper;
 import com.alpha.findinfromatin_8003.entity.Enterprise;
-import com.alpha.findinfromatin_8003.entity.User;
 import com.alpha.findinfromatin_8003.entity.WorkRoom;
 import com.alpha.findinfromatin_8003.mapper.FindInformationMapper;
 import com.alpha.findinfromatin_8003.service.FindInfomationService;
@@ -17,43 +16,34 @@ import java.util.Date;
 import java.util.List;
 
 
-@Service
+@Service(value = "FindInfomationService")
 public class FindInformationServiceImpl implements FindInfomationService {
 
     @Autowired
     private FindInformationMapper findInformationMapper;
 
- /*   @Override
-    public List<BiddingBook> getBeforBiddingbook(String company_username) {
-
-        return findInformationMapper.getBeforBiddingbook(company_username);
-    }*/
-
-
- /*   @Override
-    public List<BiddingBook> getAllBiddingBook(String page,String order) {
-        int p;
-        if(Integer.parseInt(page) >=1 ){
-            p = Integer.parseInt(page)*10+1;
-        }else{
-            p=0;
-        }
-        return findInformationMapper.getAllBiddingBook(p,order);
-    }*/
-
+    @Autowired
+    private RedisHelper redisHelper;
 
     @Override
     public String getAllWorkRoom(String page) {
-        int p;
-        if(Integer.parseInt(page) >=1 ){
-            p = Integer.parseInt(page)*10+1;
-        }else{
-            p=0;
+        JSONArray jsonArray;
+        Object redisAllWorkRoom = redisHelper.hashGet("AllWorkRoom_Page",page);
+        if (redisAllWorkRoom == null){
+            int p;
+            if(Integer.parseInt(page) >=1 ){
+                p = Integer.parseInt(page)*10+1;
+            }else{
+                p=0;
+            }
+            List<WorkRoom> list =findInformationMapper.getAllWorkRoom(p);
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+            jsonArray = JSONArray.fromObject(list,jsonConfig);
+            redisHelper.hashPut("AllWorkRoom_Page",page,jsonArray.toString());
+        }else {
+            jsonArray = JSONArray.fromObject(redisAllWorkRoom);
         }
-        List<WorkRoom> list = findInformationMapper.getAllWorkRoom(p);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-        JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig);
         return jsonArray.toString();
     }
 
@@ -68,39 +58,32 @@ public class FindInformationServiceImpl implements FindInfomationService {
 
     @Override
     public String getWorkRoom(String workroom_username) {
-        WorkRoom workRoom = new WorkRoom();
-        workRoom = findInformationMapper.getWorkRoom(workroom_username);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-        JSONObject jsonObject = JSONObject.fromObject(workRoom,jsonConfig);
-        return jsonObject.toString();
+        JSONObject json;
+        Object redisWorkRoom = redisHelper.hashGet("WorkRoom",workroom_username);
+        if (redisWorkRoom == null){
+            WorkRoom workRoom =findInformationMapper.getWorkRoom(workroom_username);
+            json = JSONObject.fromObject(workRoom);
+            redisHelper.hashPut("WorkRoom",workroom_username,json.toString());
+        } else {
+            json = JSONObject.fromObject(redisWorkRoom);
+        }
+        return json.toString();
     }
 
     @Override
     public String getEnterprise(String company_username) {
-        Enterprise enterprise = findInformationMapper.getEnterprise(company_username);
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-        JSONObject jsonObject = JSONObject.fromObject(enterprise,jsonConfig);
-        return jsonObject.toString();
-    }
-
-    @Override
-    public String getUserInfo(String username) {
-        try {
-            User user = findInformationMapper.getUserInfo(username);
+        JSONObject json;
+        Object redisEnterprise = redisHelper.hashGet("EnterPrise",company_username);
+        if (redisEnterprise == null){
+            Enterprise enterprise = findInformationMapper.getEnterprise(company_username);
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
-            JSONObject jsonObject = JSONObject.fromObject(user, jsonConfig);
-            return jsonObject.toString();
-        } catch (Exception e) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("msg","error");
-            return  jsonObject.toString();
+            json = JSONObject.fromObject(enterprise,jsonConfig);
+            redisHelper.hashPut("EnterPrise",company_username,json.toString());
+        }else {
+            json = JSONObject.fromObject(redisEnterprise);
         }
+        return json.toString();
     }
-
-
-
 }
 

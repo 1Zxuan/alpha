@@ -31,7 +31,7 @@
     </insert>
 
     <insert id="fillWorkroomAuditing" parameterType="com.alpha.fillinformation_8004.entity.WorkRoom_info_auditing">
-        insert into workroom_info_auditing
+        insert intoworkroom_info_auditing
           (workroom_username,workroom_name,workroom_phone,team_honors,status)
         values
           (#{workroom_username},#{workroom_name},#{workroom_phone},#{team_honors},0)

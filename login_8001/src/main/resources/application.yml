@@ -7,7 +7,7 @@ mybatis:
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:
-      defaultZone: http://39.98.240.68:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/
 
 ribbon:
   ReadTimeout: 120000
@@ -28,7 +28,7 @@ spring:
       max-total: 5
       max-wait-millis: 200
   redis:
-    host: 127.0.0.1
+    host: 39.98.240.68
     port: 6379
     password: 123456
     database: 0

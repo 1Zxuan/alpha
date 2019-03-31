@@ -11,35 +11,8 @@ public class Enterprise implements Serializable {
     private String company_address;
     private String company_locale;
     private String service_industry;
-    private double graded;
-    private int volume;
-    private String name;
-    private String address;
-    private String email;
-    private String cellphone;
-    private String headimage;
-    private Date registertime;
-
-    @Override
-    public String toString() {
-        return "{" +
-                "company_username='" + company_username + '\'' +
-                ", company_name='" + company_name + '\'' +
-                ", company_Mobile='" + company_Mobile + '\'' +
-                ", company_info='" + company_info + '\'' +
-                ", company_address='" + company_address + '\'' +
-                ", company_locale='" + company_locale + '\'' +
-                ", service_industry='" + service_industry + '\'' +
-                ", graded=" + graded +
-                ", volume=" + volume +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", cellphone='" + cellphone + '\'' +
-                ", headimage='" + headimage + '\'' +
-                ", registertime=" + registertime +
-                '}';
-    }
+    private Integer graded;
+    private Integer volume;
 
     public String getCompany_username() {
         return company_username;
@@ -97,67 +70,34 @@ public class Enterprise implements Serializable {
         this.service_industry = service_industry;
     }
 
-    public double getGraded() {
+    public Integer getGraded() {
         return graded;
     }
 
-    public void setGraded(double graded) {
+    public void setGraded(Integer graded) {
         this.graded = graded;
     }
 
-    public int getVolume() {
+    public Integer getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(Integer volume) {
         this.volume = volume;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getHeadimage() {
-        return headimage;
-    }
-
-    public void setHeadimage(String headimage) {
-        this.headimage = headimage;
-    }
-
-    public Date getRegistertime() {
-        return registertime;
-    }
-
-    public void setRegistertime(Date registertime) {
-        this.registertime = registertime;
+    @Override
+    public String toString() {
+        return "{" +
+                "company_username='" + company_username + '\'' +
+                ", company_name='" + company_name + '\'' +
+                ", company_Mobile='" + company_Mobile + '\'' +
+                ", company_info='" + company_info + '\'' +
+                ", company_address='" + company_address + '\'' +
+                ", company_locale='" + company_locale + '\'' +
+                ", service_industry='" + service_industry + '\'' +
+                ", graded=" + graded +
+                ", volume=" + volume +
+                '}';
     }
 }

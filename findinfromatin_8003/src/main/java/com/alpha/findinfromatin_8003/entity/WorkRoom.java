@@ -6,39 +6,32 @@ import java.util.Date;
 //工作室
 public class WorkRoom implements Serializable {
     private String workroom_username;
-    private String workroom_name;
-    private String workroom_phone;
-    private String team_honors;
-    private String goodfield;
-    private Float score;
-    private String volume;
-    private String bigfield;
-    private String cellphone;
-    private String email;
-    private String name;
-    private String address;
-    private String headimage;
-    private Date registertime;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "workroom_username='" + workroom_username + '\'' +
-                ", workroom_name='" + workroom_name + '\'' +
-                ", workroom_phone='" + workroom_phone + '\'' +
-                ", team_honors='" + team_honors + '\'' +
-                ", goodfield='" + goodfield + '\'' +
-                ", score=" + score +
-                ", volume='" + volume + '\'' +
-                ", bigfield='" + bigfield + '\'' +
-                ", cellphone='" + cellphone + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", headimage='" + headimage + '\'' +
-                ", registertime=" + registertime +
-                '}';
-    }
+    private String workroom_name;
+
+    private String workroom_phone;
+
+    private String team_honors;
+
+    private String goodfield;
+
+    private Integer score;
+
+    private Integer volume;
+
+    private String areas_expertise;
+
+    private String cellphone;
+
+    private String email;
+
+    private String name;
+
+    private String address;
+
+    private String headimage;
+
+    private Date registertime;
 
     public String getWorkroom_username() {
         return workroom_username;
@@ -80,28 +73,28 @@ public class WorkRoom implements Serializable {
         this.goodfield = goodfield;
     }
 
-    public Float getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
-    public String getVolume() {
+    public Integer getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(Integer volume) {
         this.volume = volume;
     }
 
-    public String getBigfield() {
-        return bigfield;
+    public String getAreas_expertise() {
+        return areas_expertise;
     }
 
-    public void setBigfield(String bigfield) {
-        this.bigfield = bigfield;
+    public void setAreas_expertise(String areas_expertise) {
+        this.areas_expertise = areas_expertise;
     }
 
     public String getCellphone() {
@@ -150,5 +143,25 @@ public class WorkRoom implements Serializable {
 
     public void setRegistertime(Date registertime) {
         this.registertime = registertime;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "workroom_username='" + workroom_username + '\'' +
+                ", workroom_name='" + workroom_name + '\'' +
+                ", workroom_phone='" + workroom_phone + '\'' +
+                ", team_honors='" + team_honors + '\'' +
+                ", goodfield='" + goodfield + '\'' +
+                ", score=" + score +
+                ", volume=" + volume +
+                ", Areas_expertise='" + areas_expertise + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", registertime=" + registertime +
+                '}';
     }
 }
