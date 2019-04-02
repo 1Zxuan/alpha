@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.money.mapper.MoneyMapper">
+    <insert id="recharge">
+        insert into money
+          (username,balance,inoutmoney,tradingtime,transaction_type)
+        values
+          (#{0},#{1},#{2},now(),#{3});
+    </insert>
+    <insert id="withdraw">
+        insert into money
+          (username,balance,inoutmoney,tradingtime,transaction_type)
+        values
+          (#{0},#{1},#{2},now(),#{3});
+    </insert>
+
+    <insert id="companypay">
+        insert into money
+          (username,balance,inoutmoney,tradingtime,transaction_type)
+        values
+          (#{0},#{1},#{2},now(),#{3});
+    </insert>
+
+    <insert id="workroomreceipt">
+        insert into money
+          (username,balance,inoutmoney,tradingtime,transaction_type)
+        values
+          (#{0},#{1},#{2},now(),#{3});
+    </insert>
+
+    <select id="selectadminbalance" resultType="java.lang.Double">
+        SELECT balance from admin
+    </select>
+
+
+    <select id="checkpaypassword" resultType="java.lang.Boolean" >
+        <![CDATA[
+          select count(*) from payinfo where username = #{0} and paypassword = #{1}
+        ]]>
+    </select>
+    
+    <update id="adminupdate">
+        update admin set  balance = #{0}
+    </update>
+
+</mapper>
