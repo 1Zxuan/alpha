@@ -20,5 +20,5 @@ eureka:
       defaultZone: http://39.98.240.68:8000/eureka/
 
 mybatis:
-  type-aliases-package: com.bittereggs.biddingbook_8007.entity.BiddingBook
+  type-aliases-package: com.bittereggs.biddingbook_8007.entity.*
   mapper-locations: classpath:mybatis/mapper/*.xml
