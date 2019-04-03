@@ -1,9 +1,6 @@
 package com.bittereggs.biddingbook_8007.service.impl;
 
-import com.bittereggs.biddingbook_8007.entity.BiddingBook;
-import com.bittereggs.biddingbook_8007.entity.Invatation;
-import com.bittereggs.biddingbook_8007.entity.Phase;
-import com.bittereggs.biddingbook_8007.entity.Tender_info;
+import com.bittereggs.biddingbook_8007.entity.*;
 import com.bittereggs.biddingbook_8007.mapper.BiddingBookMapper;
 import com.bittereggs.biddingbook_8007.service.BiddingBookService;
 import com.bittereggs.biddingbook_8007.util.JsonDateValueProcessor;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,9 +42,6 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             ran = Guid;
             return time + info.substring(2, info.length()) + ran;
         }
-
-
-
 
     // 判断是否存在工作室
     public boolean findworkroom(String workroom_username,String biddingbookid){
@@ -196,8 +191,8 @@ public class BiddingBookServiceImpl implements BiddingBookService {
     @Override
     public String getPhase(String biddingbookid) {
         Phase phase = biddingBookMapper.getPhase(biddingbookid);
-        JSONObject jsonObject = JSONObject.fromObject(phase);
-        return jsonObject.toString();
+//        JSONObject jsonObject = JSONObject.fromObject(phase);
+        return formatdata(phase);
     }
 
     @Override
@@ -225,5 +220,50 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             str = str + s + "/";
         }
         return str;
+    }
+
+    private String formatdata(Phase phase){
+        List<String> phase_name = list(phase.getPhase_name());
+        List<String> deposit = list(phase.getDeposit());
+        List<String> document = list(phase.getDocument());
+        List<String> finish = list(phase.getFinish());
+        List<String> picture = list(phase.getPicture());
+        List<String> pay_state = list(phase.getPay_state());
+        List<String> phase_price = list(phase.getPhase_price());
+        List<Phase> list = new ArrayList<>();
+        for (int i = 0; i < phase_name.size(); i++){
+            Phase temp = new Phase
+                    (   phase.getBiddingbookid(),
+                        phase.getWorkroomusername(),
+                        phase_name.get(i),
+                        deposit.get(i),
+                        document.get(i),
+                        finish.get(i),
+                        picture.get(i),
+                        pay_state.get(i),
+                        phase.getOrder_id(),
+                        phase.getEnterprise_username(),
+                        phase.getProject_price(),
+                        phase_price.get(i)
+                    );
+            list.add(temp);
+        }
+        JSONArray result = JSONArray.fromObject(list);
+        return result.toString();
+    }
+
+    private List<String> list (String string){
+        List<String> list = new ArrayList<>();
+        for (int i = 0,s=string.length(); i < s;){
+            if (string.charAt(i) == '/'){
+                list.add(string.substring(0,i));
+                string = string.replace(string.substring(0,i+1),"");
+                s = string.length();
+                i=0;
+            } else {
+                i++;
+            }
+        }
+        return list;
     }
 }

@@ -4,7 +4,7 @@
 <mapper namespace="com.bittereggs.biddingbook_8007.mapper.BiddingBookMapper">
     <!--招标书详情查看(根据招标书id)-->
     <select id="getBiddingBookInfo" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
-        select
+        selectconfirmOrder
           biddingbookid,company_username,company_name,bidding_name,release_time,project_title,
           project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
           dev_language,`database`,demand,technology,feedbacktime,field,type
@@ -104,6 +104,7 @@
         and
         `order`.biddingbookid=#{biddingbookid}
     </select>
+
     <update id="passPhase" parameterType="java.lang.String">
       update project_phase set document = concat(document , #{document},'/'),finish = concat(finish , '1/'),picture = concat(picture , #{picture},'/')
       where biddingbookid = #{biddingbookid}
