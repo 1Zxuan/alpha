@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.AdminMapper">
+    <select id="getWorkRoomAud" parameterType="java.lang.String" resultType="com.bittereggs.admin_8009.entity.WorkRoom">
+        select * from workroom_info_auditing where status = #{status}
+    </select>
+    <select id="getEnterpriseAud" parameterType="java.lang.String" resultType="com.bittereggs.admin_8009.entity.Enterprise">
+        select * from enterprise_info_auditing where status = #{status}
+    </select>
+</mapper>

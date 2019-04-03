@@ -88,6 +88,7 @@ public class BiddingBookController {
         String res = biddingBookService.getPhase(biddingbookid);
         return res;
     }
+
     //阶段审核通过
     @GetMapping("/passphase")
     public String passPhase(@RequestParam("document") String document,

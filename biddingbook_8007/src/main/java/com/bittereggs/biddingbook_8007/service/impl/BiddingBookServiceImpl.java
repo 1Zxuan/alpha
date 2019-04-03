@@ -210,8 +210,6 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             System.out.println(e);
             jsonObject.put("msg","error");
         }
-
-
         return jsonObject.toString();
     }
 

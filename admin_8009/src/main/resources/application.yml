@@ -1,0 +1,23 @@
+server:
+  port: 8009
+spring:
+  application:
+    name: admin_8009
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.98.240.68:3306/apollo?userUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+eureka:
+  client:
+    service-url:
+      defaultZone: http://39.98.240.68:8000/eureka/
+mybatis:
+  type-aliases-package: com.bittereggs.admin_8009.entity.*
+  mapper-locations: classpath:mybatis/mapper/*.xml
