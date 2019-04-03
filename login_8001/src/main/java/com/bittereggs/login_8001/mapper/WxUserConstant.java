@@ -12,9 +12,9 @@ public interface WxUserConstant {
 
     String WX_LOGIN_URL = "https://api.weixin.qq.com/sns/jscode2session";
 
-    String WX_LOGIN_APPID = "wx7c6a30ae3d79ad29";
+    String WX_LOGIN_APPID = "wxbba252ddb82185e2";
 
-    String WX_LOGIN_SECRET = "3a33ae7b3d781995fda55a710660004c";
+    String WX_LOGIN_SECRET = "a923d0b914ef58c58553b7ff1e56b41b";
 
     String WX_LOGIN_GRANT_TYPE = "authorization_code";
 

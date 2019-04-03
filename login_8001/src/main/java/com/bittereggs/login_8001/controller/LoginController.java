@@ -1,9 +1,9 @@
 package com.bittereggs.login_8001.controller;
 
 import com.bittereggs.login_8001.config.RedisHelper;
+import com.bittereggs.login_8001.entity.Admin;
 import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.service.LoginService;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -13,12 +13,9 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class LoginController {
@@ -30,6 +27,7 @@ public class LoginController {
 
     @Autowired
     private RedisHelper redisHelper;
+
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
     public String register(@RequestBody User user){
@@ -65,6 +63,12 @@ public class LoginController {
             jsonObject.put("msg","wrongpwd");
             return jsonObject.toString();
         }
+    }
+
+    //管理员登录
+    @RequestMapping(method = RequestMethod.POST,value = "/adminlogin")
+    public String adminlogin(@RequestBody Admin admin){
+        return this.loginService.adminlogin(admin);
     }
 
     //忘记密码发起邮箱验证
@@ -117,4 +121,6 @@ public class LoginController {
     public String test(@RequestParam("name")String name){
         return "test";
     }
+
+
 }

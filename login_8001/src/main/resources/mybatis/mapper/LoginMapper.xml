@@ -5,9 +5,9 @@
     <insert id="add" parameterType="com.bittereggs.login_8001.entity.User">
 
         insert into user
-        (username,password,type)
+        (username,password,cellphone,type)
         values
-        (#{username},#{password},#{type})
+        (#{username},#{password},#{cellphone},#{type})
 
     </insert>
 
@@ -42,4 +42,15 @@
         UPDATE `user` SET `password` = #{password} WHERE username = #{username}
 
     </update>
+
+    <insert id="setpaypassword" parameterType="java.lang.String">
+        insert into payinfo (username,paypassword) values (#{username},#{paypassword})
+    </insert>
+
+    <select id="adminlogin" parameterType="com.bittereggs.login_8001.entity.Admin" resultType="com.bittereggs.login_8001.entity.Admin">
+
+        select * from admin where username =#{username}
+
+    </select>
+
 </mapper>

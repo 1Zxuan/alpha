@@ -44,4 +44,8 @@
         update admin set  balance = #{0}
     </update>
 
+    <update id="resetpaypassword" parameterType="java.lang.String">
+        update payinfo set paypassword = #{1} where username = #{0}
+    </update>
+
 </mapper>

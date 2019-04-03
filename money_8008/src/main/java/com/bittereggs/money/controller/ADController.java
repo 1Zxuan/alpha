@@ -26,7 +26,7 @@ public class ADController {
         return adService.workroomapplyAD(advertisement);
     }
 
-    @PostMapping("/workroomapplyAD")
+    @PostMapping("/companyapplyAD")
     public String companyapplyAD(@RequestBody Advertisement advertisement){
         return adService.companyapplyAD(advertisement);
     }

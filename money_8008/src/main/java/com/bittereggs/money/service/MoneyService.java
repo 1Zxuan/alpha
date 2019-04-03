@@ -18,4 +18,11 @@ public interface MoneyService {
     String companypay(Transaction transaction);
 
     String workroomreceipt(Transaction transaction);
+
+    String getphonerepayyzm(String phone);
+
+    String checkphonerepayyzm(String phone,String yzm);
+
+    String resetpaypassword(String username, String password);
+
 }

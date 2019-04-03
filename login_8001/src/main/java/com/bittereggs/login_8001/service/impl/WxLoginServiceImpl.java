@@ -42,6 +42,7 @@ public class WxLoginServiceImpl implements WxLoginService {
     @Override
     public Map<String, Object> wxlogin(String code) {
         Map<String,String> param = WxUserConstant.MAP;
+        Map<String,Object> result = new HashMap<>();
         param.put("js_code",code);
         String wxResult = HttpClient.doGet(WxUserConstant.WX_LOGIN_URL,param);
         JSONObject jsonObject = JSONObject.fromObject(wxResult);
@@ -53,19 +54,30 @@ public class WxLoginServiceImpl implements WxLoginService {
             //缓冲为空
             WxUser wxUser1 = findbyopenid(open_id);
             if ( wxUser1 == null){
-                System.out.println("添加用户");
                 //微信用户表数据为空，插入用户信息
-                redisHelper.hashPut("WxUserList",open_id,wxUser.toString());
-                addwxuser(wxUser);
+                try {
+                    addwxuser(wxUser);
+                    redisHelper.hashPut("WxUserList",open_id,wxUser.toString());
+                } catch (Exception e){
+                    //删除添加的数据
+
+
+                    result.put("msg","error");
+                }
             }else{
+
+                //往缓存里添加数据
+                redisHelper.hashPut("WxUserList",open_id,wxUser.toString());
                 //微信用户表有数据，判断是否已经绑定用户
                 if (wxUser1.getUsername() == null){
                     //没有绑定用户
+
                 }else {
-                    //判定了用户
+                    //绑定了用户,查询用户信息
+
                 }
             }
         }
-        return null;
+        return result;
     }
 }

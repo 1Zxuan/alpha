@@ -2,21 +2,24 @@ package com.bittereggs.login_8001.service.impl;
 
 import com.bittereggs.login_8001.config.JsonDateValueProcessor;
 import com.bittereggs.login_8001.config.RedisHelper;
+import com.bittereggs.login_8001.entity.Admin;
 import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.mapper.EmailPhoneService;
 import com.bittereggs.login_8001.mapper.LoginMapper;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private LoginMapper loginMapper;
 
@@ -33,8 +36,18 @@ public class LoginServiceImpl implements LoginService {
             //缓存为空，判断数据库
             User user1 = this.loginMapper.findByName(user.getUsername());
             if(user1 == null){
+//                Date current = df.format(System.currentTimeMillis());
+//                user.setRegistertime(current);
                 this.loginMapper.add(user);
+                String paypassword = DigestUtils.md5Hex(user.getCellphone().substring(user.getCellphone().length()-6));
+                //设置默认支付密码为手机号后六位
+                this.loginMapper.setpaypassword(user.getUsername(),paypassword);
+                //设置默认余额
+//                this.loginMapper.setdefaultbalance(user.getUsername(),0,"+0",)
+
+                //设置缓存信息
                 RedisHelper.hashPut("UserList",user.getUsername(),user.toString());
+                RedisHelper.hashPut("UserPayPassword",user.getUsername(),paypassword);
                 switch (user.getType()){
                     case 1: loginMapper.addworkroominfo(user.getUsername());break;
                     case 2: loginMapper.addenterpriseinfo(user.getUsername());break;
@@ -155,6 +168,31 @@ public class LoginServiceImpl implements LoginService {
             this.loginMapper.resetpassword(user);
             return true;
         }
+    }
+
+    @Override
+    public String adminlogin(Admin admin) {
+        Admin temp ;
+        JSONObject jsonObject = new JSONObject();
+        Object redisadmin = RedisHelper.hashGet("AdminList",admin.getUsername());
+        if (redisadmin != null){
+            temp = (Admin) JSONObject.toBean(JSONObject.fromObject(redisadmin),Admin.class);
+        } else {
+            temp = this.loginMapper.adminlogin(admin);
+            if (temp != null){
+                RedisHelper.hashPut("AdminList",temp.getUsername(),temp.toString());
+            } else {
+                //返回报错:缓存中没有数据，数据库也没有查询出结果
+                jsonObject.put("msg","error");
+                return jsonObject.toString();
+            }
+        }
+        if (temp.getPassword().equals(admin.getPassword()))
+            jsonObject.put("msg","success");
+        else{
+            jsonObject.put("msg","wrongpassword");
+        }
+        return jsonObject.toString();
     }
 
 //    public Boolean login(User user) {
