@@ -2,26 +2,18 @@ package com.bittereggs.biddingbook_8007.entity;
 
 import java.io.Serializable;
 
-public class Invatation implements Serializable {
+public class Tender_info implements Serializable {
     private Integer ID;
 
     private String biddingbookid;
-
-    private String postscript;
 
     private String company_username;
 
     private String workroom_username;
 
-    private int agree;
+    private String state;
 
-    public String getCompany_username() {
-        return company_username;
-    }
-
-    public void setCompany_username(String company_username) {
-        this.company_username = company_username;
-    }
+    private String tender_price;
 
     public Integer getID() {
         return ID;
@@ -39,12 +31,12 @@ public class Invatation implements Serializable {
         this.biddingbookid = biddingbookid;
     }
 
-    public String getPostscript() {
-        return postscript;
+    public String getCompany_username() {
+        return company_username;
     }
 
-    public void setPostscript(String postscript) {
-        this.postscript = postscript;
+    public void setCompany_username(String company_username) {
+        this.company_username = company_username;
     }
 
     public String getWorkroom_username() {
@@ -55,12 +47,20 @@ public class Invatation implements Serializable {
         this.workroom_username = workroom_username;
     }
 
-    public int getAgree() {
-        return agree;
+    public String getState() {
+        return state;
     }
 
-    public void setAgree(int agree) {
-        this.agree = agree;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getTender_price() {
+        return tender_price;
+    }
+
+    public void setTender_price(String tender_price) {
+        this.tender_price = tender_price;
     }
 
     @Override
@@ -68,10 +68,10 @@ public class Invatation implements Serializable {
         return "{" +
                 "ID=" + ID +
                 ", biddingbookid='" + biddingbookid + '\'' +
-                ", postscript='" + postscript + '\'' +
                 ", company_username='" + company_username + '\'' +
                 ", workroom_username='" + workroom_username + '\'' +
-                ", agree=" + agree +
+                ", state='" + state + '\'' +
+                ", tender_price='" + tender_price + '\'' +
                 '}';
     }
 }

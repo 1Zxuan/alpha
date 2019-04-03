@@ -19,7 +19,9 @@
         dev_language,`database`,demand,technology,feedbacktime,`type`,field
         from bidding_book
         <where>
-            type = #{type}
+            <if test="type!=null">
+                type = #{type}
+            </if>
             <if test="biddingbookid !=null">
                 and biddingbookid = #{biddingbookid}
             </if>
@@ -53,6 +55,57 @@
     </insert>
     <!--邀请投标-->
     <insert id="invatationWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
-      insert into invitation(biddingbookid,postscript,workroom_username,agree) values(#{biddingbookid},#{postscript},#{workroom_username},0)
+      insert into invitation(biddingbookid,postscript,company_username,workroom_username,agree) values(#{biddingbookid},#{postscript},#{company_username},#{workroom_username},0)
     </insert>
+    <!--工作室用户查看他所有中标的招标书-->
+    <select id="getWinBiddingBook" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        select ID,biddingbookid,company_username,workroom_username,tender_price from tender_info where workroom_username=#{workroomusername} and state=1
+    </select>
+    <!--工作室投标-->
+    <insert id="initiateBidding" parameterType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+      insert into tender_info(biddingbookid,company_username,workroom_username,state,tender_price)
+      values (#{biddingbookid},#{company_username},#{workroom_username},0,#{tender_price})
+    </insert>
+    <select id="findWorkroom" parameterType="java.lang.String" resultType="java.lang.String">
+        select workroom_username from tender_info where workroom_username=#{workroom_username} and biddingbookid=#{biddingbookid}
+    </select>
+    <!--工作室投标存在就更新-->
+    <update id="upinitiateBidding" parameterType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        update tender_info set tender_price = #{tender_price} where workroom_username = #{workroom_username}
+        and biddingbookid=#{biddingbookid}
+    </update>
+    <!--工作室查看被邀请投标-->
+    <select id="getWorkroomIniate" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Invatation">
+        select biddingbookid,postscript,company_username,workroom_username,agree from invitation where workroom_username = #{workroomname}
+    </select>
+    <!--插入项目阶段-->
+    <insert id="treleasePhase" parameterType="com.bittereggs.biddingbook_8007.entity.Phase">
+        insert into project_phase(biddingbookid,phase_name,deposit,doucument) values(#{biddingbookid},#{phase_name},#{deposit},#{document})
+    </insert>
+    <!--查看招标书投标的工作室-->
+    <select id="getCompanyBidd" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        select workroom_username,state,tender_price from tender_info where biddingbookid=#{biddingbookid}
+    </select>
+    <select id="confirmOrder" parameterType="com.bittereggs.biddingbook_8007.entity.Phase" statementType="CALLABLE">
+        call orderProc(#{workroomusername},#{biddingbookid},#{order_id},#{enterprise_username},#{phase_name},#{project_price},#{phase_price})
+    </select>
+    <select id="getphase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
+        select * from project_phase where biddingbookid = #{biddingbookid}
+    </select>
+    <select id="getPhase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
+        select
+        `order`.biddingbookid,`order`.workroom_name as workroomusername,order_manager.phase_name,`order`.enterprise_name as enterprise_username,phase_price,pay_state,document,finish,picture
+        from
+         project_phase,`order`,order_manager
+        where
+        order_manager.order_id=`order`.order_id
+        and
+        `order`.biddingbookid = project_phase.biddingbookid
+        and
+        `order`.biddingbookid=#{biddingbookid}
+    </select>
+    <update id="passPhase" parameterType="java.lang.String">
+      update project_phase set document = concat(document , #{document},'/'),finish = concat(finish , '1/'),picture = concat(picture , #{picture},'/')
+      where biddingbookid = #{biddingbookid}
+    </update>
 </mapper>
