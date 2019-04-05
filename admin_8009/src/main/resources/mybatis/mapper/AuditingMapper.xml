@@ -1,0 +1,42 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.AuditingMapper">
+<select id="getWorkroomAud" parameterType="com.bittereggs.admin_8009.entity.Workroom_aud" resultType="com.bittereggs.admin_8009.entity.Workroom_aud">
+  select * from workroom_info_auditing
+  <where>
+      <if test="status != null">
+          status = #{status}
+      </if>
+  </where>
+</select>
+    <select id="getEnterpriseAud" parameterType="com.bittereggs.admin_8009.entity.Enterprise_aud" resultType="com.bittereggs.admin_8009.entity.Enterprise_aud">
+        select * from enterprise_info_auditing
+        <where>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="upPassWorkroom" parameterType="com.bittereggs.admin_8009.entity.Workroom_aud">
+      CALL update_workroom_aud(#{status},#{workroom_username})
+    </select>
+<select id="upPassEnterprise" parameterType="com.bittereggs.admin_8009.entity.Enterprise_aud">
+    CALL update_enterprise_aud(#{status},#{company_username})
+</select>
+<select id="getBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist" resultType="com.bittereggs.admin_8009.entity.Blacklist">
+    select * from blacklist
+    <where>
+    <if test="`name` !=null">
+        `name` = #{name}
+    </if>
+    </where>
+</select>
+    <insert id="addBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist">
+        insert into blacklist(`name`,`time`,reason) values(#{name},now(),#{reason})
+    </insert>
+    <delete id="delBlackList" parameterType="java.lang.String">
+        delete from blacklist where `name` = #{name}
+    </delete>
+</mapper>

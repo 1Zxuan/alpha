@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.UserManagerMapper">
+
+    <select id="getUser" resultType="com.bittereggs.admin_8009.entity.User">
+        select * from `user`
+    </select>
+
+    <update id="upUser" parameterType="com.bittereggs.admin_8009.entity.User">
+        update user set
+          password = #{password},
+        cellphone = #{cellphone},email = #{email},`name` = #{name},address = #{address},headimage= #{headimage},balance = #{balance}
+        where username = #{username}
+    </update>
+    <!--删除-->
+    <select id="delUser" parameterType="java.lang.String">
+
+    </select>
+</mapper>
