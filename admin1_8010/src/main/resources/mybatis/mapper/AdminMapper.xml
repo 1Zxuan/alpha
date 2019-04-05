@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin1_8010.mapper.AdminMapper">
+
+    <resultMap id="order" type="com.bittereggs.admin1_8010.entity.Order">
+        <result property="order_id" column="order_id"/>
+        <result property="phase_name" column="phase_name"/>
+        <result property="enterprise_name" column="enterprise_name"/>
+        <result property="phase_price" column="phase_price"/>
+        <result property="pay_state" column="pay_state"/>
+    </resultMap>
+
+    <select id="order" resultType="order">
+        select * from order_manager
+    </select>
+
+    <select id="selectbyorder_id" resultType="com.bittereggs.admin1_8010.entity.Order">
+        select * from order_manager where order_id = #{order_id}
+    </select>
+
+    <update id="agree">
+        update order_manager set pay_state = #{pay_state} where order_id = #{order_id}
+    </update>
+
+    <select id="addmoney">
+        call MoneyProc (#{0},#{1},#{2})
+    </select>
+
+    <select id="workroom_name" parameterType="java.lang.String" resultType="java.lang.String">
+       select workroom_name from `order` where enterprise_name = #{enterprise_name}
+    </select>
+</mapper>
