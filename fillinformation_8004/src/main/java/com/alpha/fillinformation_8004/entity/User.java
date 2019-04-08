@@ -12,33 +12,29 @@ import java.util.Date;
 public class User {
 
     private int ID;
+
     private String username;
+
     private String password;
+
     private String cellphone;
+
     private String email;
+
     private String name;
+
     private String address;
+
     private String headimage;
+
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date registertime;
+
     private int type;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "ID=" + ID +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", cellphone='" + cellphone + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", headimage='" + headimage + '\'' +
-                ", registertime=" + registertime +
-                ", type=" + type +
-                '}';
-    }
+    private String goodfield;
 
+    private String areas_expertise;
 
     public int getID() {
         return ID;
@@ -118,5 +114,39 @@ public class User {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getGoodfield() {
+        return goodfield;
+    }
+
+    public void setGoodfield(String goodfield) {
+        this.goodfield = goodfield;
+    }
+
+    public String getAreas_expertise() {
+        return areas_expertise;
+    }
+
+    public void setAreas_expertise(String areas_expertise) {
+        this.areas_expertise = areas_expertise;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "ID=" + ID +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", registertime=" + registertime +
+                ", type=" + type +
+                ", goodfield='" + goodfield + '\'' +
+                ", areas_expertise='" + areas_expertise + '\'' +
+                '}';
     }
 }

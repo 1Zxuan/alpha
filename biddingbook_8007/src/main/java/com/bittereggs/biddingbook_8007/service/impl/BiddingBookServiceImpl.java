@@ -10,6 +10,7 @@ import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.PrinterJob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +43,13 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             ran = Guid;
             return time + info.substring(2, info.length()) + ran;
         }
-
+        //是否在黑名单
+    public boolean getBlack(String username){
+            if(!biddingBookMapper.getBlack(username)){
+                return true;
+            }else
+                return false;
+    }
     // 判断是否存在工作室
     public boolean findworkroom(String workroom_username,String biddingbookid){
         if(biddingBookMapper.findWorkroom(workroom_username,biddingbookid)!=null)
@@ -50,6 +57,7 @@ public class BiddingBookServiceImpl implements BiddingBookService {
         else
             return true;
     }
+    //发布招标书
     @Override
     public String releaseBiddingBook(BiddingBook biddingBook) {
         long day=0;
@@ -60,16 +68,21 @@ public class BiddingBookServiceImpl implements BiddingBookService {
         biddingBook.setEngineer_time((int)day);
         JSONObject jsonObject = new JSONObject();
         try{
-            biddingBookMapper.releaseBiddingBook(biddingBook);
-            biddingBookMapper.releasePhase(biddingBook);
-            jsonObject.put("msg","success");
+            if(getBlack(biddingBook.getCompany_username())){
+                biddingBookMapper.releaseBiddingBook(biddingBook);
+                biddingBookMapper.releasePhase(biddingBook);
+                jsonObject.put("msg","success");
+            }else{
+                //在黑名单
+                jsonObject.put("msg", "inblack");
+            }
         }catch(Exception e) {
             System.out.println(e);
             jsonObject.put("msg", "error");
         }
         return jsonObject.toString();
     }
-
+    //获取招标书详细信息
     @Override
     public String getBiddingBookInfo(String biddingbookid) {
         BiddingBook biddingBook = biddingBookMapper.getBiddingBookInfo(biddingbookid);
@@ -85,7 +98,7 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             return jsonObject.toString();
         }
     }
-
+    //查找所有未完成招标书
     @Override
     public String getNoBiddingBook(BiddingBook biddingBook) {
         int page=biddingBook.getPage();
@@ -108,17 +121,22 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             return jsonObject.toString();
         }
     }
-
+    //邀请招标
     @Override
     public String invatationWorkroom(Invatation invatation) {
         JSONObject jsonObject = new JSONObject();
-        if(biddingBookMapper.invatationWorkroom(invatation)>0)
-            jsonObject.put("msg","success");
-        else
-            jsonObject.put("msg","error");
+        if(getBlack(invatation.getCompany_username())){
+            if(biddingBookMapper.invatationWorkroom(invatation)>0)
+                jsonObject.put("msg","success");
+            else
+                jsonObject.put("msg","error");
+        }else{
+            jsonObject.put("msg","inblack");
+        }
+
         return jsonObject.toString();
     }
-
+    //查看中标的所有招标书
     @Override
     public String getWinBiddingBook(String workroomusername) {
         List<Tender_info> list= biddingBookMapper.getWinBiddingBook(workroomusername);
@@ -131,25 +149,31 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             return jsonObject.toString();
         }
     }
-
+    //工作室投标
     @Override
     public String initiateBidding(Tender_info tender_info) {
+            System.out.println(tender_info.toString());
         JSONObject jsonObject = new JSONObject();
-        //true添加
-        if(findworkroom(tender_info.getWorkroom_username(),tender_info.getBiddingbookid())){
-            if(biddingBookMapper.initiateBidding(tender_info)>0)
-                jsonObject.put("msg","success");
-            else
-                jsonObject.put("msg","error");
+        if(getBlack(tender_info.getWorkroom_username())){
+            //true添加
+            if(findworkroom(tender_info.getWorkroom_username(),tender_info.getBiddingbookid())){
+                if(biddingBookMapper.initiateBidding(tender_info)>0)
+                    jsonObject.put("msg","success");
+                else
+                    jsonObject.put("msg","error");
+            }else{
+                if(biddingBookMapper.upinitiateBidding(tender_info)>0)
+                    jsonObject.put("msg","success");
+                else
+                    jsonObject.put("msg","error");
+            }
         }else{
-            if(biddingBookMapper.upinitiateBidding(tender_info)>0)
-                jsonObject.put("msg","success");
-            else
-                jsonObject.put("msg","error");
+            jsonObject.put("msg","inblack");
         }
+
         return jsonObject.toString();
     }
-
+    //工作室查看被邀请投标
     @Override
     public String getWorkroomIniate(String workroomname) {
         JSONObject jsonObject;
@@ -163,38 +187,42 @@ public class BiddingBookServiceImpl implements BiddingBookService {
             return jsonObject.toString();
         }
     }
-
+    //查看招标书投标的工作室
     @Override
     public String getCompanyBidd(String biddingbookid) {
         List<Tender_info> list = biddingBookMapper.getCompanyBidd(biddingbookid);
         JSONArray jsonArray = JSONArray.fromObject(list);
         return jsonArray.toString();
     }
-
+    //企业确认订单
     @Override
     public String confirmOrder(Phase phase) {
             JSONObject jsonObject = new JSONObject();
         try {
-            phase.setPhase_name(biddingBookMapper.getphase(phase.getBiddingbookid()).getPhase_name());
-            phase.setPhase_price(getphase(phase.getBiddingbookid(),phase.getProject_price()));
-            phase.setOrder_id(getGuid());
-            System.out.println(phase.toString());
-            biddingBookMapper.confirmOrder(phase);
-            jsonObject.put("msg","success");
+            if(getBlack(phase.getEnterprise_username())){
+                phase.setPhase_name(biddingBookMapper.getphase(phase.getBiddingbookid()).getPhase_name());
+                phase.setPhase_price(getphase(phase.getBiddingbookid(),phase.getProject_price()));
+                phase.setOrder_id(getGuid());
+                System.out.println(phase.toString());
+                biddingBookMapper.confirmOrder(phase);
+                jsonObject.put("msg","success");
+            }else{
+                jsonObject.put("msg","inblack");
+            }
         }catch(Exception e){
             System.out.println(e);
             jsonObject.put("msg","error");
         }
         return jsonObject.toString();
     }
-
+    //阶段查看
     @Override
     public String getPhase(String biddingbookid) {
         Phase phase = biddingBookMapper.getPhase(biddingbookid);
 //        JSONObject jsonObject = JSONObject.fromObject(phase);
         return formatdata(phase);
     }
-
+    //阶段审核通过
     @Override
     public String passPhase(String document, String picture,String biddingbookid) {
         JSONObject jsonObject = new JSONObject();

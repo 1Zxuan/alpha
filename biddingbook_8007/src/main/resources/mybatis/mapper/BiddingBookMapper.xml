@@ -11,7 +11,7 @@
       from bidding_book
       where  biddingbookid = #{biddingbookid}
     </select>
-    <!--获取未完成的招标书-->
+    <!--获取招标书-->
     <select id="getNoBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
         select
         biddingbookid,company_username,company_name,company_name,release_time,project_title,
@@ -42,6 +42,10 @@
             </if>
         </where>
             limit #{page},10
+    </select>
+    <!--查看是否能操作-->
+    <select id="getBlack" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        select count(*) from user where black = 1 and username = #{username}
     </select>
     <!--发布招标书-->
     <insert id="releaseBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
@@ -79,19 +83,27 @@
         select biddingbookid,postscript,company_username,workroom_username,agree from invitation where workroom_username = #{workroomname}
     </select>
     <!--插入项目阶段-->
-    <insert id="treleasePhase" parameterType="com.bittereggs.biddingbook_8007.entity.Phase">
-        insert into project_phase(biddingbookid,phase_name,deposit,doucument) values(#{biddingbookid},#{phase_name},#{deposit},#{document})
+    <insert id="releasePhase" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        insert into project_phase(biddingbookid,phase_name,deposit,document) values(#{biddingbookid},#{phase_name},#{deposit},#{document})
     </insert>
     <!--查看招标书投标的工作室-->
     <select id="getCompanyBidd" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
-        select workroom_username,state,tender_price from tender_info where biddingbookid=#{biddingbookid}
+        select tender_info.workroom_username,state,tender_price,score,headimage,volume
+        from tender_info,`user`,workroom_info,bidding_book
+        where bidding_book.biddingbookid=#{biddingbookid}
+        and bidding_book.company_username = tender_info.company_username
+        and tender_info.company_username = `user`.username
+        and workroom_info.workroom_username = tender_info.workroom_username
     </select>
+
     <select id="confirmOrder" parameterType="com.bittereggs.biddingbook_8007.entity.Phase" statementType="CALLABLE">
         call orderProc(#{workroomusername},#{biddingbookid},#{order_id},#{enterprise_username},#{phase_name},#{project_price},#{phase_price})
     </select>
+
     <select id="getphase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
         select * from project_phase where biddingbookid = #{biddingbookid}
     </select>
+
     <select id="getPhase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
         select
         `order`.biddingbookid,`order`.workroom_name as workroomusername,order_manager.phase_name,`order`.enterprise_name as enterprise_username,phase_price,pay_state,document,finish,picture

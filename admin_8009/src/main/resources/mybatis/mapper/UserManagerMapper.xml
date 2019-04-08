@@ -15,6 +15,6 @@
     </update>
     <!--删除-->
     <select id="delUser" parameterType="java.lang.String">
-
+        call usermanagerProc(#{username})
     </select>
 </mapper>

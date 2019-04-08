@@ -2,7 +2,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bittereggs.admin_8009.mapper.ReportMapper">
-    <select id="getReort" parameterType="com.bittereggs.admin_8009.entity.Report" resultType="com.bittereggs.admin_8009.entity.Report">
+
+    <select id="getReport" parameterType="com.bittereggs.admin_8009.entity.Report" resultType="com.bittereggs.admin_8009.entity.Report">
         select * from report_manager
         <where>
             <if test="complain_username != null">
@@ -10,8 +11,14 @@
             </if>
         </where>
     </select>
+
     <insert id="addReport" parameterType="com.bittereggs.admin_8009.entity.Report">
         insert into report_manager(complain_username,respond_username,complain_type,complain_content,complain_status,complain_time)
-        values(#{complain_username},#{respond_username},#{complain_type},#{complain_content},#{complain_status},now())
+        values(#{complain_username},#{respond_username},#{complain_type},#{complain_content},1,now())
     </insert>
+
+    <update id="upReport" parameterType="com.bittereggs.admin_8009.entity.Report">
+        update report_manager set complain_status = 2,complain_res = #{complain_res} where complain_username = #{complain_username} and respond_username=#{respond_username}
+    </update>
+
 </mapper>

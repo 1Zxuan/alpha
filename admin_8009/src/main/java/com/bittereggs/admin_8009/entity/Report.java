@@ -7,19 +7,30 @@ import java.util.Date;
 
 public class Report implements Serializable {
 
-    Integer ID;
+    private Integer ID;
 
-    String complain_username;
+    private String complain_username;
 
-    String respond_username;
+    private String respond_username;
 
-    String complain_type;
+    private String complain_type;
 
-    String complain_content;
+    private String complain_content;
 
-    Integer complain_status;
+    private Integer complain_status;
+
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-    Date complain_time;
+    private Date complain_time;
+
+    private Integer complain_res;
+
+    public Integer getComplain_res() {
+        return complain_res;
+    }
+
+    public void setComplain_res(Integer complain_res) {
+        this.complain_res = complain_res;
+    }
 
     public Integer getID() {
         return ID;
@@ -87,6 +98,7 @@ public class Report implements Serializable {
                 ", complain_content='" + complain_content + '\'' +
                 ", complain_status=" + complain_status +
                 ", complain_time=" + complain_time +
+                ", complain_res=" + complain_res +
                 '}';
     }
 }

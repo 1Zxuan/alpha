@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.AppealMapper">
+    <select id="getAppeal" parameterType="com.bittereggs.admin_8009.entity.Appeal" resultType="com.bittereggs.admin_8009.entity.Appeal">
+        select * from appeal
+        <where>
+            <if test="username !=null">
+                `username` = #{username}
+            </if>
+            <if test="appeal_status !=null">
+                appeal_status=#{appeal_status}
+            </if>
+            <if test="appeal_res !=null">
+                appeal_res = #{appeal_res}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -3,10 +3,7 @@ package com.bittereggs.admin_8009.controller;
 import com.bittereggs.admin_8009.entity.Report;
 import com.bittereggs.admin_8009.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -16,8 +13,8 @@ public class ReportController {
     private ReportService reportService;
 
     @GetMapping("/getreport")
-    public String getReort(@RequestBody Report report){
-        String res = reportService.getReort(report);
+    public String getReport(@RequestBody Report report){
+        String res = reportService.getReport(report);
         return res;
     }
 
@@ -27,5 +24,10 @@ public class ReportController {
         return res;
     }
 
+    @GetMapping("/upreport")
+    public String upReport(@RequestBody Report report){
+        String res = reportService.upReport(report);
+        return res;
+    }
 
 }

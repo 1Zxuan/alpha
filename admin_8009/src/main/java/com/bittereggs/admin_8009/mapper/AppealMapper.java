@@ -1,5 +1,6 @@
 package com.bittereggs.admin_8009.mapper;
 
+import com.bittereggs.admin_8009.entity.Appeal;
 import com.bittereggs.admin_8009.entity.Report;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -7,11 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Mapper
-@Component(value = "ReportMapper")
-public interface ReportMapper {
-    List<Report> getReport(Report report);
+@Component(value = "AppealMapper")
+public interface AppealMapper {
 
-    void addReport(Report report);
-
-    void upReport(Report report);
+    List<Report> getAppeal(Appeal appeal);
 }

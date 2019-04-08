@@ -15,6 +15,37 @@ public class Tender_info implements Serializable {
 
     private String tender_price;
 
+    private String headimage;
+
+    private Integer score;
+
+    private Integer volume;
+
+
+    public String getHeadimage() {
+        return headimage;
+    }
+
+    public void setHeadimage(String headimage) {
+        this.headimage = headimage;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Integer volume) {
+        this.volume = volume;
+    }
+
     public Integer getID() {
         return ID;
     }
@@ -72,6 +103,9 @@ public class Tender_info implements Serializable {
                 ", workroom_username='" + workroom_username + '\'' +
                 ", state='" + state + '\'' +
                 ", tender_price='" + tender_price + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", score=" + score +
+                ", volume=" + volume +
                 '}';
     }
 }

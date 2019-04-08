@@ -56,6 +56,36 @@ public class BiddingBook implements Serializable {
 
     private Integer page;
 
+    private String phase_name;
+
+    private String deposit;
+
+    private String document;
+
+    public String getPhase_name() {
+        return phase_name;
+    }
+
+    public void setPhase_name(String phase_name) {
+        this.phase_name = phase_name;
+    }
+
+    public String getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
+    }
+
     public Integer getID() {
         return ID;
     }
@@ -275,6 +305,9 @@ public class BiddingBook implements Serializable {
                 ", field='" + field + '\'' +
                 ", order='" + order + '\'' +
                 ", page=" + page +
+                ", phase_name='" + phase_name + '\'' +
+                ", deposit='" + deposit + '\'' +
+                ", document='" + document + '\'' +
                 '}';
     }
 }

@@ -12,9 +12,9 @@
         </where>
     </select>
 
-    <insert id="addBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist">
-        insert into blacklist(`name`,`time`,reason) values(#{name},now(),#{reason})
-    </insert>
+    <select id="addBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist">
+        call blacklistProc(#{name},#{reason})
+    </select>
 
     <delete id="delBlackList" parameterType="java.lang.String">
         delete from blacklist where `name` = #{name}
