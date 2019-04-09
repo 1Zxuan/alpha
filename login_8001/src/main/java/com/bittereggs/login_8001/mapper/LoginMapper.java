@@ -27,4 +27,6 @@ public interface LoginMapper {
 
     Admin adminlogin(Admin admin);
 
+    Boolean checkphonlogin(String phone);
+
 }
