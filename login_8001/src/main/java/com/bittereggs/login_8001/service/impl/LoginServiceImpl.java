@@ -195,6 +195,35 @@ public class LoginServiceImpl implements LoginService {
         return jsonObject.toString();
     }
 
+    @Override
+    public String registeryzm(String phone) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
+            RedisHelper.valuePut(phone+"registeryzm",jsonObject.get("yzm"));
+            RedisHelper.expirse(phone+"registeryzm",5,TimeUnit.MINUTES);
+            jsonObject.remove("yzm");
+            jsonObject.put("msg","success");
+        } catch (Exception e){
+            jsonObject.put("msg","error");
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
+    public Boolean checkregisteryzm(String phone, String yzm) {
+        Object checkregisteryzm = RedisHelper.getValue(phone+"registeryzm");
+        if (checkregisteryzm == null){
+            return false;
+        } else {
+            if (yzm.equals(checkregisteryzm.toString())){
+                RedisHelper.remove(phone+"registeryzm");
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
 //    public Boolean login(User user) {
 //        ValueOperations<String,User> operations = redisTemplate.opsForValue();
 //        Boolean exist = redisTemplate.hasKey(user);

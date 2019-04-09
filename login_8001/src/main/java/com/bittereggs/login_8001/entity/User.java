@@ -26,6 +26,16 @@ public class User implements Serializable {
 
     private Integer type;
 
+    private String yzm;
+
+    public String getYzm() {
+        return yzm;
+    }
+
+    public void setYzm(String yzm) {
+        this.yzm = yzm;
+    }
+
     public Integer getID() {
         return ID;
     }
@@ -119,6 +129,7 @@ public class User implements Serializable {
                 ", headimage='" + headimage + '\'' +
                 ", registertime=" + registertime +
                 ", type=" + type +
+                ", yzm='" + yzm + '\'' +
                 '}';
     }
 }

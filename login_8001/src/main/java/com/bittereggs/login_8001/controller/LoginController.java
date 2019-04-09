@@ -31,13 +31,18 @@ public class LoginController {
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
     public String register(@RequestBody User user){
-        Map<String,Object> map = new HashMap<>();
-       if(this.loginService.add(user)){
-           map.put("msg","success");
-       }else {
-           map.put("msg","error");
-       }
-       JSONObject jsonObject = JSONObject.fromObject(map);
+        JSONObject jsonObject = new JSONObject();
+        if (loginService.checkregisteryzm(user.getCellphone(),user.getYzm())){
+            user.setYzm("");
+            if(this.loginService.add(user)){
+                jsonObject.put("msg","success");
+
+            }else {
+                jsonObject.put("msg","error");
+            }
+        } else {
+            jsonObject.put("msg","erroryzm");
+        }
         return jsonObject.toString();
     }
 
@@ -63,6 +68,12 @@ public class LoginController {
             jsonObject.put("msg","wrongpwd");
             return jsonObject.toString();
         }
+    }
+
+    //注册发起手机验证码
+    @GetMapping("/registeryzm")
+    public String registeryzm(String phone){
+        return loginService.registeryzm(phone);
     }
 
     //管理员登录

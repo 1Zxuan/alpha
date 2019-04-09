@@ -23,4 +23,9 @@ public interface LoginService {
 
     String adminlogin(Admin admin);
 
+    String registeryzm(String phone);
+
+    Boolean checkregisteryzm(String phone,String yzm);
+
+
 }
