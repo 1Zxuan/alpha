@@ -36,18 +36,16 @@ public class LoginServiceImpl implements LoginService {
             //缓存为空，判断数据库
             User user1 = this.loginMapper.findByName(user.getUsername());
             if(user1 == null){
-//                Date current = df.format(System.currentTimeMillis());
-//                user.setRegistertime(current);
+                //加密用户登录密码
+                user.setPassword(DigestUtils.md5Hex(user.getPassword()));
                 this.loginMapper.add(user);
                 String paypassword = DigestUtils.md5Hex(user.getCellphone().substring(user.getCellphone().length()-6));
                 //设置默认支付密码为手机号后六位
                 this.loginMapper.setpaypassword(user.getUsername(),paypassword);
-                //设置默认余额
-//                this.loginMapper.setdefaultbalance(user.getUsername(),0,"+0",)
-
                 //设置缓存信息
-                RedisHelper.hashPut("UserList",user.getUsername(),user.toString());
-                RedisHelper.hashPut("UserPayPassword",user.getUsername(),paypassword);
+                RedisHelper.hashPut("UserList",user.getUsername(),user.toString());//添加用户缓存信息
+                RedisHelper.hashPut("UserPayPassword",user.getUsername(),paypassword);//设置用户的默认支付密码
+                RedisHelper.hashPut("UserPhoneList",user.getCellphone(),user.toString());//用户通过手机号登录
                 switch (user.getType()){
                     case 1: loginMapper.addworkroominfo(user.getUsername());break;
                     case 2: loginMapper.addenterpriseinfo(user.getUsername());break;
@@ -84,16 +82,29 @@ public class LoginServiceImpl implements LoginService {
         //验证
         Object redisphoenyzm = RedisHelper.getValue(phone+"yzm");
         JSONObject json = new JSONObject();
-        if (redisphoenyzm ==null){
-            json.put("msg","error");
+        Boolean can;
+        if (redisphoenyzm == null){
+            //检索数据库是否存在手机号
+            User user = loginMapper.findByphone(phone);
+            if (user == null)
+            {
+                //json.put("msg","errorphone");
+                can = false;
+            }
+            else {
+                can = true;
+            }
         } else {
+            can = false;
+        }
+        if (can){
             if (yzm.equals(redisphoenyzm.toString())){
-                Object redisphoenuser = RedisHelper.hashGet("PhoneUserList",phone);
+                Object redisphoenuser = RedisHelper.hashGet("UserPhoneList",phone);
                 if ( redisphoenuser == null){
                     JsonConfig jsonConfig = new JsonConfig();
                     jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
                     json = JSONObject.fromObject(this.loginMapper.findByphone(phone),jsonConfig);
-                    RedisHelper.hashPut("PhoneUserList",phone,json.toString());
+                    RedisHelper.hashPut("UserPhoneList",phone,json.toString());
                 }else {
                     json = JSONObject.fromObject(redisphoenuser);
                 }
@@ -101,6 +112,8 @@ public class LoginServiceImpl implements LoginService {
             }else {
                 json.put("msg","error");
             }
+        }else {
+            json.put("msg","errorphone");
         }
         return json.toString();
     }
@@ -122,17 +135,33 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String getphoneloginyzm(String phone) {
-
         //调用手机验证码服务发送验证码，并存入缓存
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
-            RedisHelper.valuePut(phone+"yzm",jsonObject.get("yzm"));
-            RedisHelper.expirse(phone+"yzm",5,TimeUnit.MINUTES);
-            jsonObject.remove("yzm");
-            jsonObject.put("msg","success");
-        } catch (Exception e){
-            jsonObject.put("msg","error");
+        //判断手机号是否能进行登录
+        Object UserPhoneList = RedisHelper.hashFindAll("UserPhoneList").get(phone);
+        Boolean can;
+        if (UserPhoneList != null){
+            can = true;//可以发送验证码
+        }else {
+            User user = loginMapper.findByphone(phone);
+            if (user == null)
+                can = false;//不可以发送验证码
+            else
+                can = true;
+        }
+        if (can){
+            try {
+                jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
+                RedisHelper.valuePut(phone+"yzm",jsonObject.get("yzm"));
+                RedisHelper.expirse(phone+"yzm",5,TimeUnit.MINUTES);
+                jsonObject.remove("yzm");
+                jsonObject.put("msg","success");
+            } catch (Exception e){
+                e.printStackTrace();
+                jsonObject.put("msg","error");
+            }
+        } else {
+            jsonObject.put("msg","errorphone");
         }
         return jsonObject.toString();
     }
@@ -198,14 +227,19 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String registeryzm(String phone) {
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
-            RedisHelper.valuePut(phone+"registeryzm",jsonObject.get("yzm"));
-            RedisHelper.expirse(phone+"registeryzm",5,TimeUnit.MINUTES);
-            jsonObject.remove("yzm");
-            jsonObject.put("msg","success");
-        } catch (Exception e){
-            jsonObject.put("msg","error");
+        Object UserPhoneList = RedisHelper.hashGet("UserPhoneList",phone);
+        if (UserPhoneList == null){
+            try {
+                jsonObject = JSONObject.fromObject(this.emailPhoneService.sendphone(phone));
+                RedisHelper.valuePut(phone+"registeryzm",jsonObject.get("yzm"));
+                RedisHelper.expirse(phone+"registeryzm",5,TimeUnit.MINUTES);
+                jsonObject.remove("yzm");
+                jsonObject.put("msg","success");
+            } catch (Exception e){
+                jsonObject.put("msg","error");
+            }
+        } else {
+            jsonObject.put("msg","errorphone");
         }
         return jsonObject.toString();
     }

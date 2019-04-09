@@ -64,7 +64,7 @@ public class LoginController {
             jsonObject.put("msg","error");
             return jsonObject.toString();
         }catch(IncorrectCredentialsException e){
-            //用户名不存在
+            //密码错误
             jsonObject.put("msg","wrongpwd");
             return jsonObject.toString();
         }
@@ -72,7 +72,7 @@ public class LoginController {
 
     //注册发起手机验证码
     @GetMapping("/registeryzm")
-    public String registeryzm(String phone){
+    public String registeryzm(@RequestParam("cellphone") String phone){
         return loginService.registeryzm(phone);
     }
 
@@ -97,9 +97,9 @@ public class LoginController {
     }
 
     //手机号验证登录
-    @RequestMapping(method = RequestMethod.POST,value = "/checkphonelogin")
-    public String checkphonelogin(@RequestParam("phone") String phone,@RequestParam("yzm") String yzm){
-        String result = this.loginService.phonelogin(phone,yzm);
+    @RequestMapping(method = RequestMethod.POST,value = "/checkphonelogin",consumes = "application/json")
+    public String checkphonelogin(@RequestBody JSONObject data){
+        String result = this.loginService.phonelogin(data.get("phone").toString(),data.get("yzm").toString());
         return result;
     }
 
