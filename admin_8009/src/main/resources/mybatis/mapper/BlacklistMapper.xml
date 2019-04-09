@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.BlacklistMapper">
+
+    <select id="getBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist" resultType="com.bittereggs.admin_8009.entity.Blacklist">
+        select * from blacklist
+        <where>
+        <if test="`name` !=null">
+            `name` = #{name}
+        </if>
+        </where>
+    </select>
+
+    <select id="addBlackList" parameterType="com.bittereggs.admin_8009.entity.Blacklist">
+        call blacklistProc(#{name},#{reason})
+    </select>
+
+    <delete id="delBlackList" parameterType="java.lang.String">
+        delete from blacklist where `name` = #{name}
+    </delete>
+
+</mapper>

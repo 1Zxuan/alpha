@@ -32,7 +32,6 @@ public class BiddingBookController {
     //发布招标书
     @PostMapping("/releasebiddingbook")
     public String releaseBiddingBook(@RequestBody BiddingBook biddingBook){
-        System.out.println(biddingBook.toString());
         String res = biddingBookService.releaseBiddingBook(biddingBook);
         return res;
     }
@@ -96,8 +95,6 @@ public class BiddingBookController {
                             @RequestParam("biddingbookid") String biddingbookid){
         String res=biddingBookService.passPhase(document,picture,biddingbookid);
         return res;
-
-
     }
 
 }

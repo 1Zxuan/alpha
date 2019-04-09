@@ -1,17 +1,9 @@
-package com.alpha.fillinformation_8004.entity;
+package com.bittereggs.admin_8009.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.io.Serializable;
 
-import java.util.Date;
-
-/**
- * @author 楼中煊
- * @data 2019/3/27
- * @time 20:19
- */
-public class User {
-
-    private int ID;
+public class User implements Serializable {
+    private Integer ID;
 
     private String username;
 
@@ -27,20 +19,17 @@ public class User {
 
     private String headimage;
 
-    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-    private Date registertime;
+    private String registertime;
 
-    private int type;
+    private String balance;
 
-    private String goodfield;
+    private Integer type;
 
-    private String areas_expertise;
-
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
@@ -100,36 +89,28 @@ public class User {
         this.headimage = headimage;
     }
 
-    public Date getRegistertime() {
+    public String getRegistertime() {
         return registertime;
     }
 
-    public void setRegistertime(Date registertime) {
+    public void setRegistertime(String registertime) {
         this.registertime = registertime;
     }
 
-    public int getType() {
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
-    }
-
-    public String getGoodfield() {
-        return goodfield;
-    }
-
-    public void setGoodfield(String goodfield) {
-        this.goodfield = goodfield;
-    }
-
-    public String getAreas_expertise() {
-        return areas_expertise;
-    }
-
-    public void setAreas_expertise(String areas_expertise) {
-        this.areas_expertise = areas_expertise;
     }
 
     @Override
@@ -143,10 +124,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", headimage='" + headimage + '\'' +
-                ", registertime=" + registertime +
+                ", registertime='" + registertime + '\'' +
+                ", balance='" + balance + '\'' +
                 ", type=" + type +
-                ", goodfield='" + goodfield + '\'' +
-                ", areas_expertise='" + areas_expertise + '\'' +
                 '}';
     }
 }

@@ -25,7 +25,7 @@ public interface BiddingBookMapper {
 
     int initiateBidding(Tender_info tender_info);
 
-    String findWorkroom(String workroom_username,String tender_id);
+    String findWorkroom(String workroom_username,String biddingbookid);
 
     int upinitiateBidding(Tender_info tender_info);
 
@@ -42,4 +42,6 @@ public interface BiddingBookMapper {
     Phase getPhase(String biddingbookid);
 
     void passPhase(String document, String picture,String biddingbookid);
+
+    boolean getBlack(String username);
 }

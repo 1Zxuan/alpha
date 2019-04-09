@@ -38,23 +38,47 @@
     </insert>
 
     <!--更新基本信息-->
-    <update id="upUserInfo" parameterType="com.alpha.fillinformation_8004.entity.User">
-    update `user`
-      set
-          password=#{password},
-          cellphone=#{cellphone},
-          email=#{email},
-          `name`=#{name},
-          address=#{address},
-          headimage=#{headimage}
-      where
-          username =#{username}
+    <select id="upUserInfo" parameterType="com.alpha.fillinformation_8004.entity.User">
+        call upuserinfoProc(#{username},#{password},#{cellphone},#{email},#{name},#{address},#{headimage},#{goodfield})
+    </select>
+    <!--更新大领域-->
+    <update id="upAreasExpertise1" parameterType="com.alpha.fillinformation_8004.entity.GoodField">
+        update workroom_goodfield
+        <set>
+        <if test="website_build !=null">
+            website_build = #{website_build},
+        </if>
+        <if test="mobile_development !=null">
+            mobile_development = #{mobile_development},
+        </if>
+        <if test="software_development !=null">
+            software_development = #{software_development},
+        </if>
+        <if test="product_UI_IT_solutions !=null">
+            product_UI_IT_solutions = #{product_UI_IT_solutions},
+        </if>
+        <if test="saasServeice !=null">
+            saasServeice = #{saasServeice},
+        </if>
+        <if test="domain_name_cloud_services !=null">
+            domain_name_cloud_services = #{domain_name_cloud_services},
+        </if>
+        <if test="data_services !=null">
+            data_services = #{data_services},
+        </if>
+        <if test="testing_services !=null">
+            testing_services = #{testing_services}
+        </if>
+        </set>
+        where workroom_username=#{workroom_username}
     </update>
-
+    <insert id="addWorkroomGoodField" parameterType="java.lang.String">
+        insert into workroom_goodfield(workroom_username) values(#{workroom_username})
+    </insert>
     <!--查找审核表是否存在这个工作室-->
     <select id="findworkroomusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
         <![CDATA[
-        select count(*) from workroom_info_auditing where workroom_username=#{workroom_username}
+        select count(*) from ${tables} where workroom_username=#{workroom_username}
       ]]>
     </select>
     <!--查找审核表是否存在这个企业-->
