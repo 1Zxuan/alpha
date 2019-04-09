@@ -12,4 +12,8 @@ import java.util.List;
 public interface AppealMapper {
 
     List<Report> getAppeal(Appeal appeal);
+
+    void addAppeal(Appeal appeal);
+
+    void upAppeal(Appeal appeal);
 }

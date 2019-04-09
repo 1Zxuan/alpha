@@ -110,6 +110,7 @@ public class BiddingBookServiceImpl implements BiddingBookService {
         }
         biddingBook.setPage(p);
         List<BiddingBook> list = biddingBookMapper.getNoBiddingBook(biddingBook);
+        System.out.println(list.size());
         if(list.size()>0) {
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
@@ -230,6 +231,19 @@ public class BiddingBookServiceImpl implements BiddingBookService {
         JSONObject jsonObject = new JSONObject();
         try {
             biddingBookMapper.passPhase(document, picture,biddingbookid);
+            jsonObject.put("msg","success");
+        }catch(Exception e){
+            System.out.println(e);
+            jsonObject.put("msg","error");
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
+    public String agreeIniateWorkroom(Invatation invatation) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            biddingBookMapper.agreeIniateWorkroom(invatation);
             jsonObject.put("msg","success");
         }catch(Exception e){
             System.out.println(e);

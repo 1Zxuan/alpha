@@ -16,8 +16,10 @@
         call blacklistProc(#{name},#{reason})
     </select>
 
-    <delete id="delBlackList" parameterType="java.lang.String">
-        delete from blacklist where `name` = #{name}
-    </delete>
+    <select id="delBlackList" parameterType="java.lang.String">
+
+        call DelblackProc(#{name})
+
+    </select>
 
 </mapper>

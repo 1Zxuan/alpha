@@ -124,4 +124,9 @@
       update project_phase set document = concat(document , #{document},'/'),finish = concat(finish , '1/'),picture = concat(picture , #{picture},'/')
       where biddingbookid = #{biddingbookid}
     </update>
+
+    <update id="agreeIniateWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
+        update invitation set agree = #{agree} where biddingbookid = #{biddingbookid} and company_username = #{company_username} and
+        workroom_username = #{workroom_username}
+    </update>
 </mapper>

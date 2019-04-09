@@ -41,4 +41,6 @@ public interface BiddingBookMapper {
     void passPhase(String document, String picture,String biddingbookid);
 
     boolean getBlack(String username);
+
+    void agreeIniateWorkroom(Invatation invatation);
 }

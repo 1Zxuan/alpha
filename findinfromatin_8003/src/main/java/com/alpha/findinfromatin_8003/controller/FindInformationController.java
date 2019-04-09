@@ -33,6 +33,7 @@ public class FindInformationController {
         String res = findInfomationService.getAllWorkRoom(page);
         return res;
     }
+
     //查询工作室（模糊）
     @GetMapping("/searchworkroom")
     public String searchWorkRoom(@RequestParam(name = "key") String key){

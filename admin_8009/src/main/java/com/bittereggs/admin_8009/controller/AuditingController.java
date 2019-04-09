@@ -12,25 +12,25 @@ public class AuditingController {
     @Autowired
     private AuditingService auditingService;
 
-    @GetMapping("/getworkroomaud")
+    @PostMapping("/getworkroomaud")
     public String getWorkroomAud(@RequestBody Workroom_aud workroom_aud){
         String res = auditingService.getWorkroomAud(workroom_aud);
         return res;
     }
 
-    @GetMapping("/getenterpriseaud")
+    @PostMapping("/getenterpriseaud")
     public String getEnterpriseAud(@RequestBody Enterprise_aud enterprise_aud){
         String res = auditingService.getEnterpriseAud(enterprise_aud);
         return res;
     }
 
-    @GetMapping("/uppassworkroom")
+    @PostMapping("/uppassworkroom")
     public String upPassWorkroom(@RequestBody Workroom_aud workroom_aud){
         String res = auditingService.upPassWorkroom(workroom_aud);
         return res;
     }
 
-    @GetMapping("/uppassenterprise")
+    @PostMapping("/uppassenterprise")
     public String upPassEnterprise(@RequestBody Enterprise_aud enterprise_aud) {
         String res = auditingService.upPassEnterprise(enterprise_aud);
         return res;

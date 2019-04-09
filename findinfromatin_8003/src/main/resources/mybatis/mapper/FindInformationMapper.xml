@@ -42,12 +42,11 @@
 
     <!--通过工作室名称获取所有信息-->
     <select id="getWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
-        select workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-          score,volume,areas_expertise
+        select workroom_info.workroom_username,workroom_name,workroom_phone,team_honors,score,volume,areas_expertise,workroom_goodfield.*
         from
-          workroom_info
+          workroom_info,workroom_goodfield
         where
-          workroom_username=#{workroom_username}
+          workroom_info.workroom_username=#{workroom_username} and workroom_goodfield.workroom_username = workroom_info.workroom_username
     </select>
 
 </mapper>
