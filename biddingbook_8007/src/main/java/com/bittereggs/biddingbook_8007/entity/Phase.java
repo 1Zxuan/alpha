@@ -40,6 +40,9 @@ public class Phase {
         this.phase_price = phase_price;
     }
 
+    public Phase() {
+
+    }
     public String getPay_state() {
         return pay_state;
     }

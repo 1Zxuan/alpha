@@ -21,6 +21,7 @@ public class BiddingBookController {
         String res = biddingBookService.getWinBiddingBook(workroomusername);
         return res;
     }
+
     //邀请招标
     @PostMapping("/invatationworkroom")
     public String invatationWorkroom(@RequestBody Invatation invatation){
@@ -75,7 +76,7 @@ public class BiddingBookController {
     }
 
     //企业确认订单
-    @GetMapping("/confirmorder")
+    @PostMapping("/confirmorder")
     public String confirmOrder(@RequestBody Phase phase){
         String res = biddingBookService.confirmOrder(phase);
         return res;

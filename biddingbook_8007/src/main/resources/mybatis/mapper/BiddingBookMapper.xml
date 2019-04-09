@@ -4,7 +4,7 @@
 <mapper namespace="com.bittereggs.biddingbook_8007.mapper.BiddingBookMapper">
     <!--招标书详情查看(根据招标书id)-->
     <select id="getBiddingBookInfo" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
-        selectconfirmOrder
+        select
           biddingbookid,company_username,company_name,bidding_name,release_time,project_title,
           project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
           dev_language,`database`,demand,technology,feedbacktime,field,type
@@ -45,7 +45,9 @@
     </select>
     <!--查看是否能操作-->
     <select id="getBlack" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
         select count(*) from user where black = 1 and username = #{username}
+        ]]>
     </select>
     <!--发布招标书-->
     <insert id="releaseBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
@@ -59,7 +61,8 @@
     </insert>
     <!--邀请投标-->
     <insert id="invatationWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
-      insert into invitation(biddingbookid,postscript,company_username,workroom_username,agree) values(#{biddingbookid},#{postscript},#{company_username},#{workroom_username},0)
+      insert into invitation(biddingbookid,postscript,company_username,workroom_username,agree)
+      values(#{biddingbookid},#{postscript},#{company_username},#{workroom_username},0)
     </insert>
     <!--工作室用户查看他所有中标的招标书-->
     <select id="getWinBiddingBook" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
@@ -101,7 +104,7 @@
     </select>
 
     <select id="getphase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
-        select * from project_phase where biddingbookid = #{biddingbookid}
+        select biddingbookid,phase_name,deposit,document,finish,picture from project_phase where biddingbookid = #{biddingbookid}
     </select>
 
     <select id="getPhase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">

@@ -1,9 +1,6 @@
 package com.bittereggs.biddingbook_8007.mapper;
 
-import com.bittereggs.biddingbook_8007.entity.BiddingBook;
-import com.bittereggs.biddingbook_8007.entity.Invatation;
-import com.bittereggs.biddingbook_8007.entity.Phase;
-import com.bittereggs.biddingbook_8007.entity.Tender_info;
+import com.bittereggs.biddingbook_8007.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

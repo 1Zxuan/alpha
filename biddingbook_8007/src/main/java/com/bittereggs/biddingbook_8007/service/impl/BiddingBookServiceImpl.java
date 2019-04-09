@@ -197,9 +197,11 @@ public class BiddingBookServiceImpl implements BiddingBookService {
     //企业确认订单
     @Override
     public String confirmOrder(Phase phase) {
+//            System.out.println(phase.toString());
             JSONObject jsonObject = new JSONObject();
         try {
             if(getBlack(phase.getEnterprise_username())){
+               // Phase test = biddingBookMapper.getphase(phase.getBiddingbookid());
                 phase.setPhase_name(biddingBookMapper.getphase(phase.getBiddingbookid()).getPhase_name());
                 phase.setPhase_price(getphase(phase.getBiddingbookid(),phase.getProject_price()));
                 phase.setOrder_id(getGuid());
