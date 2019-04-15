@@ -12,4 +12,32 @@
         insert into wxuser (openid,username) values (#{openid},#{username})
     </insert>
 
+    <select id="isexist" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          select count(*) from wxuser where openid = #{openid}
+       ]]>
+    </select>
+
+    <select id="isexistphone" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          select count(*) from `user` where cellphone = #{phone}
+        ]]>
+    </select>
+
+    <select id="checkwxusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+         <![CDATA[
+          select count(*) from `user` where username = #{username}
+        ]]>
+    </select>
+
+    <insert id="fillinfo" parameterType="java.lang.String">
+        insert into `user`
+        (username,password,cellphone,`type`)
+        values
+        (#{0},#{1},#{2},#{3});
+    </insert>
+    
+    <select id="getUserbyopenid" parameterType="java.lang.String" resultType="com.bittereggs.login_8001.entity.User">
+        SELECT * from `user` where `user`.cellphone = wxuser.cellphone and wxuser.openid = #{openid}
+    </select>
 </mapper>

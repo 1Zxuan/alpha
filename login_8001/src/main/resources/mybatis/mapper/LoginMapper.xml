@@ -53,4 +53,10 @@
 
     </select>
 
+    <select id="checkusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+          select count(*) from `user` where username = #{username};
+        ]]>
+    </select>
+
 </mapper>

@@ -6,7 +6,7 @@ mybatis:
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:
-      defaultZone: http://39.98.240.68:8000/eureka/
+      defaultZone: http://localhost:8000/eureka/
 
 ribbon:
   ReadTimeout: 120000
@@ -20,7 +20,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://39.98.240.68:3306/apollo?userUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: 123456
+    password: 123
     dbcp2:
       min-idle: 5
       initial-size: 5
@@ -28,6 +28,6 @@ spring:
       max-wait-millis: 200
   redis:
     host: 39.98.240.68
-    port: 6379
+    port: 4576
     password: 123456
     database: 0

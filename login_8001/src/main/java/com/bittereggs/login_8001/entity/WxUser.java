@@ -11,7 +11,7 @@ public class WxUser {
 
     private String openid;
 
-    private String username;
+    private String cellphone;
 
     public Integer getId() {
         return id;
@@ -29,12 +29,20 @@ public class WxUser {
         this.openid = openid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCellphone(String username) {
+        this.cellphone = username;
+    }
+
+    public WxUser() {
+    }
+
+    public WxUser(String openid, String cellphone) {
+        this.openid = openid;
+        this.cellphone = cellphone;
     }
 
     @Override
@@ -42,7 +50,7 @@ public class WxUser {
         return "{" +
                 "id=" + id +
                 ", openid='" + openid + '\'' +
-                ", username='" + username + '\'' +
+                ", cellphone='" + cellphone + '\'' +
                 '}';
     }
 }

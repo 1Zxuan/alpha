@@ -27,5 +27,5 @@ public interface LoginService {
 
     Boolean checkregisteryzm(String phone,String yzm);
 
-
+    String checkusername(String username);
 }

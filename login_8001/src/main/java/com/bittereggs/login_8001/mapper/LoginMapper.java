@@ -29,4 +29,5 @@ public interface LoginMapper {
 
     Boolean checkphonlogin(String phone);
 
+    Boolean checkusername(String username);
 }

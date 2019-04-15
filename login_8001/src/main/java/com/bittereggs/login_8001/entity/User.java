@@ -28,13 +28,9 @@ public class User implements Serializable {
 
     private String yzm;
 
-    public String getYzm() {
-        return yzm;
-    }
+    private Integer black;
 
-    public void setYzm(String yzm) {
-        this.yzm = yzm;
-    }
+    private Double balance;
 
     public Integer getID() {
         return ID;
@@ -116,9 +112,33 @@ public class User implements Serializable {
         this.type = type;
     }
 
+    public String getYzm() {
+        return yzm;
+    }
+
+    public void setYzm(String yzm) {
+        this.yzm = yzm;
+    }
+
+    public Integer getBlack() {
+        return black;
+    }
+
+    public void setBlack(Integer black) {
+        this.black = black;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "User{" +
                 "ID=" + ID +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -130,6 +150,8 @@ public class User implements Serializable {
                 ", registertime=" + registertime +
                 ", type=" + type +
                 ", yzm='" + yzm + '\'' +
+                ", black=" + black +
+                ", balance=" + balance +
                 '}';
     }
 }
