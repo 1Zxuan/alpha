@@ -62,11 +62,11 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public User findByName(String name) {
         User user;
-        JSONObject redis_user = JSONObject.fromObject(RedisHelper.hashFindAll("UserList").get(name));
-        if(redis_user.isEmpty()){
+        Object redis_user = RedisHelper.hashFindAll("UserList").get(name);
+        if(redis_user == null){
             user = this.loginMapper.findByName(name);
         }else {
-            user = (User) JSONObject.toBean(redis_user,User.class);
+            user = (User) JSONObject.toBean(JSONObject.fromObject(redis_user),User.class);
         }
         return user;
     }
@@ -257,6 +257,20 @@ public class LoginServiceImpl implements LoginService {
                 return false;
             }
         }
+    }
+
+    @Override
+    public String checkusername(String username) {
+        JSONObject jsonObject = new JSONObject();
+        Boolean isexist = loginMapper.checkusername(username);
+        if (isexist){
+            //用户名存在
+            jsonObject.put("msg","error");
+        } else {
+            //用户名不存在
+            jsonObject.put("msg","success");
+        }
+        return jsonObject.toString();
     }
 //    public Boolean login(User user) {
 //        ValueOperations<String,User> operations = redisTemplate.opsForValue();

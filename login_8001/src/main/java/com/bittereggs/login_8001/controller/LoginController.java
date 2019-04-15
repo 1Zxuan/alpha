@@ -5,6 +5,7 @@ import com.bittereggs.login_8001.entity.Admin;
 import com.bittereggs.login_8001.entity.User;
 import com.bittereggs.login_8001.service.LoginService;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,13 +21,18 @@ import java.util.*;
 @RestController
 public class LoginController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private LoginService loginService;
 
     @Autowired
     private RedisHelper redisHelper;
+
+    //注册判断用户名是否已存在
+    @RequestMapping(method = RequestMethod.POST, value = "/checkusername", consumes = "application/json")
+    public String checkusername(@RequestBody User user){
+        return loginService.checkusername(user.getUsername());
+    }
 
     //注册
     @RequestMapping(method = RequestMethod.POST,value = "/register",consumes = "application/json")
@@ -36,7 +42,6 @@ public class LoginController {
             user.setYzm("");
             if(this.loginService.add(user)){
                 jsonObject.put("msg","success");
-
             }else {
                 jsonObject.put("msg","error");
             }
@@ -52,11 +57,12 @@ public class LoginController {
         System.out.println(user.getUsername()+user.getPassword());
         JSONObject jsonObject = new JSONObject();
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), DigestUtils.md5Hex(user.getPassword()));
         try {
            subject.login(token);
            jsonObject = JSONObject.fromObject(redisHelper.hashFindAll("UserList").get(token.getUsername()));
            jsonObject.remove("password");
+           jsonObject.remove("yzm");
            jsonObject.put("msg","success");
             return jsonObject.toString();
         }catch(UnknownAccountException e) {
