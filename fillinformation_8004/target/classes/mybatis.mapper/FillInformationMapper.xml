@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.fillinformation_8004.mapper.fillInformationMapper">
+    <update id="upEnterpriseAuditing" parameterType="com.alpha.fillinformation_8004.entity.Enterprise_info_auditing">
+        update enterprise_info_auditing
+            set
+                company_name = #{company_name},
+                company_Mobile = #{company_Mobile},
+                company_info = #{company_info},
+                company_address = #{company_address},
+                company_locale = #{company_locale},
+                service_industry = #{service_industry},
+                status = 0
+        where company_username=#{company_username}
+    </update>
+    <update id="upWorkroomAuditing" parameterType="com.alpha.fillinformation_8004.entity.WorkRoom_info_auditing">
+        update workroom_info_auditing
+            set
+                workroom_name = #{workroom_name},
+                workroom_phone = #{workroom_phone},
+                team_honors = #{team_honors},
+                status = 0
+        where workroom_username=#{workroom_username}
+    </update>
+    <insert id="fillEnterpriseAuditing" parameterType="com.alpha.fillinformation_8004.entity.Enterprise_info_auditing">
+        insert into enterprise_info_auditing
+          (company_username,company_name,company_Mobile,company_info,company_address,company_locale,service_industry,status)
+        values
+          (#{company_username},#{company_name},#{company_Mobile},#{company_info},#{company_address},#{company_locale},#{service_industry},0)
+    </insert>
+
+    <insert id="fillWorkroomAuditing" parameterType="com.alpha.fillinformation_8004.entity.WorkRoom_info_auditing">
+        insert intoworkroom_info_auditing
+          (workroom_username,workroom_name,workroom_phone,team_honors,status)
+        values
+          (#{workroom_username},#{workroom_name},#{workroom_phone},#{team_honors},0)
+    </insert>
+
+    <!--更新基本信息-->
+    <select id="upUserInfo" parameterType="com.alpha.fillinformation_8004.entity.User">
+        call upuserinfoProc(#{username},#{password},#{cellphone},#{email},#{name},#{address},#{headimage},#{goodfield})
+    </select>
+    <!--更新大领域-->
+    <update id="upAreasExpertise1" parameterType="com.alpha.fillinformation_8004.entity.GoodField">
+        update workroom_goodfield
+        <set>
+        <if test="website_build !=null">
+            website_build = #{website_build},
+        </if>
+        <if test="mobile_development !=null">
+            mobile_development = #{mobile_development},
+        </if>
+        <if test="software_development !=null">
+            software_development = #{software_development},
+        </if>
+        <if test="product_UI_IT_solutions !=null">
+            product_UI_IT_solutions = #{product_UI_IT_solutions},
+        </if>
+        <if test="saasServeice !=null">
+            saasServeice = #{saasServeice},
+        </if>
+        <if test="domain_name_cloud_services !=null">
+            domain_name_cloud_services = #{domain_name_cloud_services},
+        </if>
+        <if test="data_services !=null">
+            data_services = #{data_services},
+        </if>
+        <if test="testing_services !=null">
+            testing_services = #{testing_services}
+        </if>
+        </set>
+        where workroom_username=#{workroom_username}
+    </update>
+    <insert id="addWorkroomGoodField" parameterType="java.lang.String">
+        insert into workroom_goodfield(workroom_username) values(#{workroom_username})
+    </insert>
+    <!--查找审核表是否存在这个工作室-->
+    <select id="findworkroomusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+        select count(*) from ${tables} where workroom_username=#{workroom_username}
+      ]]>
+    </select>
+    <!--查找审核表是否存在这个企业-->
+    <select id="findenterpriseusername" parameterType="java.lang.String" resultType="java.lang.Boolean">
+      <![CDATA[
+        select count(*) from enterprise_info_auditing where company_username=#{company_username}
+      ]]>
+    </select>
+</mapper>

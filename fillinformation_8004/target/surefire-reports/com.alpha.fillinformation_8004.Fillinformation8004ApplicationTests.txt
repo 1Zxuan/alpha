@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.alpha.fillinformation_8004.Fillinformation8004ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.508 s - in com.alpha.fillinformation_8004.Fillinformation8004ApplicationTests

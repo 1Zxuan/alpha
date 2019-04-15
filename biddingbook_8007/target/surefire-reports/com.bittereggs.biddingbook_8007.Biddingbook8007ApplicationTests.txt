@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.bittereggs.biddingbook_8007.Biddingbook8007ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.404 s - in com.bittereggs.biddingbook_8007.Biddingbook8007ApplicationTests

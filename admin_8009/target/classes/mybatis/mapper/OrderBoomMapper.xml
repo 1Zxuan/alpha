@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.admin_8009.mapper.OrderBoomMapper">
+    <select id="getOrderBoom" parameterType="com.bittereggs.admin_8009.entity.Order_Boom" resultType="com.bittereggs.admin_8009.entity.Order_Boom">
+        select * from order_boom
+        <where>
+            <if test="orderid !=null">
+                orderid = #{orderid}
+            </if>
+            <if test="type !=null">
+                type =#{type}
+            </if>
+            <if test="status !=null">
+                status = #{status}
+            </if>
+        </where>
+    </select>
+    <insert id="addOrderBoom" parameterType="com.bittereggs.admin_8009.entity.Order_Boom">
+        insert into order_boom(orderid,time,type,interrupt_content)
+        values(#{orderid},now(),0,#{interrupt_content})
+    </insert>
+    <select id="upOrderBoom" parameterType="java.lanng.String">
+        call upOrderBoomProc(#{orderid},#{status})
+    </select>
+</mapper>

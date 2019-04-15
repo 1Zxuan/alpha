@@ -1,0 +1,6 @@
+com\bittereggs\email_phone_8002\service\MailService.class
+com\bittereggs\email_phone_8002\service\impl\MailServiceImpl.class
+com\bittereggs\email_phone_8002\util\SendSMS.class
+com\bittereggs\email_phone_8002\controller\MailController.class
+com\bittereggs\email_phone_8002\CorsConfig.class
+com\bittereggs\email_phone_8002\Email8002Application.class

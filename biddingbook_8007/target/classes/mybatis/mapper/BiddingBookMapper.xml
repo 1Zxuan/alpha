@@ -1,0 +1,132 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bittereggs.biddingbook_8007.mapper.BiddingBookMapper">
+    <!--招标书详情查看(根据招标书id)-->
+    <select id="getBiddingBookInfo" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        select
+          biddingbookid,company_username,company_name,bidding_name,release_time,project_title,
+          project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
+          dev_language,`database`,demand,technology,feedbacktime,field,type
+      from bidding_book
+      where  biddingbookid = #{biddingbookid}
+    </select>
+    <!--获取招标书-->
+    <select id="getNoBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook" resultType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        select
+        biddingbookid,company_username,company_name,company_name,release_time,project_title,
+        project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
+        dev_language,`database`,demand,technology,feedbacktime,`type`,field,bidding_name
+        from bidding_book
+        <where>
+            <if test="type!=null">
+                type = #{type}
+            </if>
+            <if test="biddingbookid !=null">
+                and biddingbookid = #{biddingbookid}
+            </if>
+            <if test="company_username !=null">
+                and company_username = #{company_username}
+            </if>
+            <if test="domian !=null">
+                and domian = #{domian}
+            </if>
+            <if test="dev_platform  !=null">
+                and dev_platform  = #{dev_platform}
+            </if>
+            <if test="dev_language  !=null">
+                and dev_language  = #{dev_language}
+            </if>
+            <if test="order != null">
+                order by ${order}
+            </if>
+        </where>
+            limit #{page},10
+    </select>
+    <!--查看是否能操作-->
+    <select id="getBlack" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        <![CDATA[
+        select count(*) from user where black = 1 and username = #{username}
+        ]]>
+    </select>
+    <!--发布招标书-->
+    <insert id="releaseBiddingBook" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+      insert into bidding_book(biddingbookid,company_username,company_name,bidding_name,release_time,project_title,project_info,
+        project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,dev_language,`database`,demand,technology,
+        feedbacktime,type,field)
+      values
+          (#{biddingbookid},#{company_username},#{company_name},#{bidding_name},#{release_time},#{project_title},#{project_info},
+          #{project_amount},#{project_type},#{engineer_time},#{project_endtime},#{domian},#{dev_platform},#{dev_language},#{database},#{demand},
+          #{technology},#{feedbacktime},0,#{field})
+    </insert>
+    <!--邀请投标-->
+    <insert id="invatationWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
+      insert into invitation(biddingbookid,postscript,company_username,workroom_username,agree)
+      values(#{biddingbookid},#{postscript},#{company_username},#{workroom_username},0)
+    </insert>
+    <!--工作室用户查看他所有中标的招标书-->
+    <select id="getWinBiddingBook" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        select ID,biddingbookid,company_username,workroom_username,tender_price from tender_info where workroom_username=#{workroomusername} and state=1
+    </select>
+    <!--工作室投标-->
+    <insert id="initiateBidding" parameterType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+      insert into tender_info(biddingbookid,company_username,workroom_username,state,tender_price)
+      values (#{biddingbookid},#{company_username},#{workroom_username},0,#{tender_price})
+    </insert>
+    <select id="findWorkroom" parameterType="java.lang.String" resultType="java.lang.String">
+        select workroom_username from tender_info where workroom_username=#{workroom_username} and biddingbookid=#{biddingbookid}
+    </select>
+    <!--工作室投标存在就更新-->
+    <update id="upinitiateBidding" parameterType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        update tender_info set tender_price = #{tender_price} where workroom_username = #{workroom_username}
+        and biddingbookid=#{biddingbookid}
+    </update>
+    <!--工作室查看被邀请投标-->
+    <select id="getWorkroomIniate" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Invatation">
+        select biddingbookid,postscript,company_username,workroom_username,agree from invitation where workroom_username = #{workroomname}
+    </select>
+    <!--插入项目阶段-->
+    <insert id="releasePhase" parameterType="com.bittereggs.biddingbook_8007.entity.BiddingBook">
+        insert into project_phase(biddingbookid,phase_name,deposit,document) values(#{biddingbookid},#{phase_name},#{deposit},#{document})
+    </insert>
+    <!--查看招标书投标的工作室-->
+    <select id="getCompanyBidd" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Tender_info">
+        select tender_info.workroom_username,state,tender_price,score,headimage,volume
+        from tender_info,`user`,workroom_info,bidding_book
+        where bidding_book.biddingbookid=#{biddingbookid}
+        and bidding_book.company_username = tender_info.company_username
+        and tender_info.company_username = `user`.username
+        and workroom_info.workroom_username = tender_info.workroom_username
+    </select>
+
+    <select id="confirmOrder" parameterType="com.bittereggs.biddingbook_8007.entity.Phase" statementType="CALLABLE">
+        call orderProc(#{workroomusername},#{biddingbookid},#{order_id},#{enterprise_username},#{phase_name},#{project_price},#{phase_price})
+    </select>
+
+    <select id="getphase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
+        select biddingbookid,phase_name,deposit,document,finish,picture from project_phase where biddingbookid = #{biddingbookid}
+    </select>
+
+    <select id="getPhase" parameterType="java.lang.String" resultType="com.bittereggs.biddingbook_8007.entity.Phase">
+        select
+        `order`.biddingbookid,`order`.workroom_name as workroomusername,order_manager.phase_name,`order`.enterprise_name as enterprise_username,phase_price,pay_state,document,finish,picture
+        from
+         project_phase,`order`,order_manager
+        where
+        order_manager.order_id=`order`.order_id
+        and
+        `order`.biddingbookid = project_phase.biddingbookid
+        and
+        `order`.biddingbookid=#{biddingbookid}
+    </select>
+
+    <update id="passPhase" parameterType="java.lang.String">
+      update project_phase set document = concat(document , #{document},'/'),finish = concat(finish , '1/'),picture = concat(picture , #{picture},'/')
+      where biddingbookid = #{biddingbookid}
+    </update>
+
+    <update id="agreeIniateWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
+        update invitation set agree = #{agree} where biddingbookid = #{biddingbookid} and company_username = #{company_username} and
+        workroom_username = #{workroom_username}
+    </update>
+</mapper>

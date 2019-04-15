@@ -1,0 +1,11 @@
+com\bittereggs\biddingbook_8007\entity\BiddingBook.class
+com\bittereggs\biddingbook_8007\util\JsonDateValueProcessor.class
+com\bittereggs\biddingbook_8007\mapper\BiddingBookMapper.class
+com\bittereggs\biddingbook_8007\entity\Tender_info.class
+com\bittereggs\biddingbook_8007\entity\Invatation.class
+com\bittereggs\biddingbook_8007\Biddingbook8007Application.class
+com\bittereggs\biddingbook_8007\CorsConfig.class
+com\bittereggs\biddingbook_8007\controller\BiddingBookController.class
+com\bittereggs\biddingbook_8007\service\impl\BiddingBookServiceImpl.class
+com\bittereggs\biddingbook_8007\entity\Phase.class
+com\bittereggs\biddingbook_8007\service\BiddingBookService.class
