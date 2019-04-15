@@ -5,13 +5,18 @@
 
 
     <!--分页显示所有工作室-->
-    <select id="getAllWorkRoom" parameterType="java.lang.Integer" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
-        select
-          workroom_username,workroom_name,score,volume,goodfield,areas_expertise,`user`.registertime
+    <select id="getAllWorkRoom" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
+        select distinct
+        workroom_info.workroom_username,workroom_name,score,volume,areas_expertise,`user`.registertime,headimage
         from
-          workroom_info,`user`
-        where
-          workroom_info.workroom_username=`user`.username
+          workroom_info,`user`,workroom_goodfield
+        <where>
+        workroom_info.workroom_username=`user`.username
+        <if test="goodfield !=null">
+        and ${goodfield}=1 and
+        workroom_goodfield.workroom_username=workroom_info.workroom_username
+        </if>
+        </where>
         limit
           #{p},10
     </select>
@@ -19,10 +24,10 @@
     <!--查询工作室-->
     <select id="searchWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
         select
-            workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
+            workroom_username,workroom_name,workroom_phone,team_honors,workroom_goodfield.*,
             score,volume,areas_expertise,cellphone,email,`name`,address,headimage,registertime
         FROM
-          workroom_info,user
+          workroom_info,user,workroom_goodfield
         WHERE
           workroom_username like "%"#{key}"%"
         and
@@ -42,12 +47,11 @@
 
     <!--通过工作室名称获取所有信息-->
     <select id="getWorkRoom" parameterType="java.lang.String" resultType="com.alpha.findinfromatin_8003.entity.WorkRoom">
-        select workroom_username,workroom_name,workroom_phone,team_honors,goodfield,
-          score,volume,areas_expertise
+        select workroom_info.workroom_username,workroom_name,workroom_phone,team_honors,score,volume,areas_expertise,workroom_goodfield.*
         from
-          workroom_info
+          workroom_info,workroom_goodfield
         where
-          workroom_username=#{workroom_username}
+          workroom_info.workroom_username=#{workroom_username} and workroom_goodfield.workroom_username = workroom_info.workroom_username
     </select>
 
 </mapper>

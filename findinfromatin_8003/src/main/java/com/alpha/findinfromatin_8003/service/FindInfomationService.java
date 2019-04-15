@@ -4,7 +4,7 @@ package com.alpha.findinfromatin_8003.service;
 
 public interface FindInfomationService {
 
-    String getAllWorkRoom(String page);
+    String getAllWorkRoom(String page,String goodfield);
 
     String searchWorkRoom(String key);
 

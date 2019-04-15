@@ -28,4 +28,6 @@ public interface BiddingBookService {
     String getPhase(String biddingbookid);
 
     String passPhase(String document, String picture,String biddingbookid);
+
+    String agreeIniateWorkroom(Invatation invatation);
 }

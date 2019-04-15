@@ -11,7 +11,7 @@ public class BlacklistController {
     @Autowired
     private BlacklistService blacklistService;
 
-    @GetMapping("/getblacklist")
+    @PostMapping("/getblacklist")
     public String getBlackList(@RequestBody Blacklist blacklist){
         String res = blacklistService.getBlackList(blacklist);
         return res;

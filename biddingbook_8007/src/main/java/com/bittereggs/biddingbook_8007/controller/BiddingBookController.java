@@ -68,6 +68,13 @@ public class BiddingBookController {
         return res;
     }
 
+    //工作室邀请反馈
+    @PostMapping("/agreeiniateworkroom")
+    public String agreeIniateWorkroom(@RequestBody Invatation invatation){
+        String res = biddingBookService.agreeIniateWorkroom(invatation);
+        return res;
+    }
+
     //查看招标书投标的工作室
     @GetMapping("/getcompanybidd")
     public String getCompanyBidd(@RequestParam("biddingbookid") String biddingbookid){
@@ -97,5 +104,6 @@ public class BiddingBookController {
         String res=biddingBookService.passPhase(document,picture,biddingbookid);
         return res;
     }
+
 
 }

@@ -16,7 +16,7 @@
         select
         biddingbookid,company_username,company_name,company_name,release_time,project_title,
         project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
-        dev_language,`database`,demand,technology,feedbacktime,`type`,field
+        dev_language,`database`,demand,technology,feedbacktime,`type`,field,bidding_name
         from bidding_book
         <where>
             <if test="type!=null">
@@ -123,5 +123,10 @@
     <update id="passPhase" parameterType="java.lang.String">
       update project_phase set document = concat(document , #{document},'/'),finish = concat(finish , '1/'),picture = concat(picture , #{picture},'/')
       where biddingbookid = #{biddingbookid}
+    </update>
+
+    <update id="agreeIniateWorkroom" parameterType="com.bittereggs.biddingbook_8007.entity.Invatation">
+        update invitation set agree = #{agree} where biddingbookid = #{biddingbookid} and company_username = #{company_username} and
+        workroom_username = #{workroom_username}
     </update>
 </mapper>

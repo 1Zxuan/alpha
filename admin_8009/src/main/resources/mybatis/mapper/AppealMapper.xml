@@ -16,4 +16,10 @@
             </if>
         </where>
     </select>
+    <insert id="addAppeal" parameterType="com.bittereggs.admin_8009.entity.Appeal">
+        insert into appeal(username,appeal_date,appeal_status,appeal_content) values(#{username},now(),1,#{appeal_content})
+    </insert>
+    <update id="upAppeal" parameterType="com.bittereggs.admin_8009.entity.Appeal">
+        update appeal set appeal_status=2,appeal_res=#{appeal_res} where username=#{username} and appeal_date=#{appeal_date}
+    </update>
 </mapper>

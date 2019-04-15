@@ -12,7 +12,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @GetMapping("/getreport")
+    @PostMapping("/getreport")
     public String getReport(@RequestBody Report report){
         String res = reportService.getReport(report);
         return res;
@@ -24,7 +24,7 @@ public class ReportController {
         return res;
     }
 
-    @GetMapping("/upreport")
+    @PostMapping("/upreport")
     public String upReport(@RequestBody Report report){
         String res = reportService.upReport(report);
         return res;
