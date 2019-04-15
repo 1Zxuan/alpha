@@ -26,24 +26,26 @@ public class FindInformationServiceImpl implements FindInfomationService {
     private RedisHelper redisHelper;
 
     @Override
-    public String getAllWorkRoom(String page) {
+    public String getAllWorkRoom(String page,String goodfield){
         JSONArray jsonArray;
-        Object redisAllWorkRoom = redisHelper.hashGet("AllWorkRoom_Page",page);
-        if (redisAllWorkRoom == null){
+        //Object redisAllWorkRoom = redisHelper.hashGet("AllWorkRoom_Page",page);
+        //if (redisAllWorkRoom == null){
             int p;
-            if(Integer.parseInt(page) >=1 ){
+            if(Integer.parseInt(page) >=1){
                 p = Integer.parseInt(page)*10+1;
             }else{
                 p=0;
             }
-            List<WorkRoom> list =findInformationMapper.getAllWorkRoom(p);
+            if(goodfield == "")
+                goodfield=null;
+            List<WorkRoom> list =findInformationMapper.getAllWorkRoom(p,goodfield);
             JsonConfig jsonConfig = new JsonConfig();
             jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
             jsonArray = JSONArray.fromObject(list,jsonConfig);
-            redisHelper.hashPut("AllWorkRoom_Page",page,jsonArray.toString());
-        }else {
-            jsonArray = JSONArray.fromObject(redisAllWorkRoom);
-        }
+            //redisHelper.hashPut("AllWorkRoom_Page",page,jsonArray.toString());
+//        }else {
+//            jsonArray = JSONArray.fromObject(redisAllWorkRoom);
+//        }
         return jsonArray.toString();
     }
 

@@ -29,8 +29,10 @@ public class FindInformationController {
 
     //获取全部工作室信息
     @GetMapping("/getallworkroom")
-    public String getAllWorkRoom(@RequestParam(name = "page") String page){
-        String res = findInfomationService.getAllWorkRoom(page);
+    public String getAllWorkRoom(@RequestParam(name = "page") String page,
+                                 @RequestParam(name = "goodfield") String goodfield){
+        String res = findInfomationService.getAllWorkRoom(page,goodfield);
+        System.out.println(res);
         return res;
     }
 

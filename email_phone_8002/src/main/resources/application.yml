@@ -5,8 +5,8 @@ server:
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://39.98.240.68:8000/eureka/
 
 spring:
   application:
-    name: email-phone-8002
+    name: email_phone_8002

@@ -44,6 +44,8 @@ public class SendSMS {
             String smsid = root.elementText("smsid");
             if(code.equals("2")){
                 System.out.println("短信提交成功");
+            }else {
+                System.out.println(code);
             }
         } catch (IOException | DocumentException e) {
             e.printStackTrace();

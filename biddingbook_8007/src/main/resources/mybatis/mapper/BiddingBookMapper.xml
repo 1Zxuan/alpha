@@ -16,7 +16,7 @@
         select
         biddingbookid,company_username,company_name,company_name,release_time,project_title,
         project_info,project_amount,project_type,engineer_time,project_endtime,domian,dev_platform,
-        dev_language,`database`,demand,technology,feedbacktime,`type`,field
+        dev_language,`database`,demand,technology,feedbacktime,`type`,field,bidding_name
         from bidding_book
         <where>
             <if test="type!=null">
